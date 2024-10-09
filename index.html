@@ -48,6 +48,10 @@
         input[type="checkbox"] {
             margin-right: 10px;
         }
+        canvas {
+            margin: 20px auto;
+            display: block;
+        }
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -58,6 +62,7 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>7-dniowe Wyzwanie Aktywności</h1>
@@ -160,5 +165,29 @@
             alert('Zaznaczone dni: ' + completedDays.join(', '));
         }
     </script>
-</body>
-</html>
+
+    <!-- Sekcja wykresu postępów -->
+    <h2>Postępy w czasie</h2>
+    <canvas id="progressChart" width="400" height="200"></canvas>
+    <script>
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
+                datasets: [{
+                    label: 'Postępy w aktywności (minuty)',
+                    data: [30, 40, 45, 30, 50, 40, 20], // przykładowe dane
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
