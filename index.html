@@ -151,6 +151,7 @@
             <input type="checkbox" name="day7"> Dzień 7 - Odpoczynek
         </label><br>
         <button type="button" onclick="submitActivity()">Zapisz postępy</button>
+        <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
     </form>
 
     <script>
@@ -162,7 +163,27 @@
                     completedDays.push(checkbox.parentNode.textContent.trim());
                 }
             });
-            alert('Zaznaczone dni: ' + completedDays.join(', '));
+            
+            if (completedDays.length > 0) {
+                alert('Zaznaczone dni: ' + completedDays.join(', '));
+            } else {
+                alert('Nie zaznaczono żadnych dni.');
+            }
+        }
+
+        function updateChart() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let progressData = [];
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    progressData.push(30 + index * 5); // przykładowe wartości
+                } else {
+                    progressData.push(0); // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
+                }
+            });
+
+            progressChart.data.datasets[0].data = progressData;
+            progressChart.update();
         }
     </script>
 
@@ -176,18 +197,26 @@
             data: {
                 labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
                 datasets: [{
-                    label: 'Postępy w aktywności (minuty)',
-                    data: [30, 40, 45, 30, 50, 40, 20], // przykładowe dane
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: false
+                    label: 'Postępy',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Postęp (%)'
+                        }
                     }
                 }
             }
         });
+    </script>
+</body>
+</html>
