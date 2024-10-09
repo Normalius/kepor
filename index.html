@@ -25,6 +25,10 @@
             border-radius: 5px;
             padding: 15px;
             margin: 10px 0;
+            transition: box-shadow 0.3s;
+        }
+        .day:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
         }
         .time {
             font-weight: bold;
@@ -34,6 +38,24 @@
             background: #f9cbd2;
             padding: 10px;
             border-left: 5px solid #e74c3c;
+        }
+        form {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e7f3fe;
+            border-radius: 5px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .day {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -99,5 +121,44 @@
             <li>Słuchaj swojego ciała; jeśli czujesz się przemęczony, zmniejsz intensywność.</li>
         </ul>
     </div>
+
+    <form id="activityForm">
+        <h3>Śledź swoje postępy:</h3>
+        <label>
+            <input type="checkbox" name="day1"> Dzień 1 - Bieganie
+        </label><br>
+        <label>
+            <input type="checkbox" name="day2"> Dzień 2 - Siłownia
+        </label><br>
+        <label>
+            <input type="checkbox" name="day3"> Dzień 3 - Dłuższe bieganie
+        </label><br>
+        <label>
+            <input type="checkbox" name="day4"> Dzień 4 - Trening HIIT
+        </label><br>
+        <label>
+            <input type="checkbox" name="day5"> Dzień 5 - Siłownia
+        </label><br>
+        <label>
+            <input type="checkbox" name="day6"> Dzień 6 - Bieganie
+        </label><br>
+        <label>
+            <input type="checkbox" name="day7"> Dzień 7 - Odpoczynek
+        </label><br>
+        <button type="button" onclick="submitActivity()">Zapisz postępy</button>
+    </form>
+
+    <script>
+        function submitActivity() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let completedDays = [];
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    completedDays.push(checkbox.parentNode.textContent.trim());
+                }
+            });
+            alert('Zaznaczone dni: ' + completedDays.join(', '));
+        }
+    </script>
 </body>
 </html>
