@@ -151,10 +151,31 @@
             <input type="checkbox" name="day7"> Dzień 7 - Odpoczynek
         </label><br>
         <button type="button" onclick="submitActivity()">Zapisz postępy</button>
-        <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
     </form>
 
     <script>
+        // Zapisz stan w localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let progress = {};
+            checkboxes.forEach((checkbox, index) => {
+                progress['day' + (index + 1)] = checkbox.checked;
+            });
+            localStorage.setItem('activityProgress', JSON.stringify(progress));
+        }
+
+        // Wczytaj stan z localStorage
+        function loadProgress() {
+            const savedProgress = JSON.parse(localStorage.getItem('activityProgress'));
+            if (savedProgress) {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach((checkbox, index) => {
+                    checkbox.checked = savedProgress['day' + (index + 1)];
+                });
+            }
+        }
+
+        // Zapisywanie i wczytywanie postępów na zdarzenia
         function submitActivity() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             let completedDays = [];
@@ -163,60 +184,15 @@
                     completedDays.push(checkbox.parentNode.textContent.trim());
                 }
             });
-            
-            if (completedDays.length > 0) {
-                alert('Zaznaczone dni: ' + completedDays.join(', '));
-            } else {
-                alert('Nie zaznaczono żadnych dni.');
-            }
+            alert('Zaznaczone dni: ' + completedDays.join(', '));
+            saveProgress(); // Zapisz postępy do localStorage
         }
 
-        function updateChart() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            let progressData = [];
-            checkboxes.forEach((checkbox, index) => {
-                if (checkbox.checked) {
-                    progressData.push(30 + index * 5); // przykładowe wartości
-                } else {
-                    progressData.push(0); // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
-                }
-            });
-
-            progressChart.data.datasets[0].data = progressData;
-            progressChart.update();
-        }
+        // Załaduj postępy po załadowaniu strony
+        window.onload = loadProgress;
     </script>
 
     <!-- Sekcja wykresu postępów -->
     <h2>Postępy w czasie</h2>
-    <canvas id="progressChart" width="400" height="200"></canvas>
-    <script>
-        const ctx = document.getElementById('progressChart').getContext('2d');
-        const progressChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
-                datasets: [{
-                    label: 'Postępy',
-                    data: [0, 0, 0, 0, 0, 0, 0],
-                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Postęp (%)'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
