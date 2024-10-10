@@ -96,9 +96,6 @@
         <button type="button" onclick="submitActivity()">Zapisz postępy</button>
         <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
     </form>
-
-    <h2>Postępy w czasie</h2>
-    <canvas id="progressChart" width="400" height="200"></canvas>
     <form id="stepsForm">
     <h2>Wprowadź liczbę kroków</h2>
     <label for="day1">Dzień 1:</label>
@@ -124,6 +121,9 @@
 
     <button type="button" onclick="submitSteps()">Zapisz kroki</button>
 </form>
+    <h2>Postępy w czasie</h2>
+    
+    <canvas id="progressChart" width="400" height="200"></canvas>
 
 <canvas id="stepsChart"></canvas>
 
