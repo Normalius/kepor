@@ -99,6 +99,34 @@
 
     <h2>Postępy w czasie</h2>
     <canvas id="progressChart" width="400" height="200"></canvas>
+    <form id="stepsForm">
+    <h2>Wprowadź liczbę kroków</h2>
+    <label for="day1">Dzień 1:</label>
+    <input type="number" id="day1" name="day1" min="10000" value="10000"><br>
+    
+    <label for="day2">Dzień 2:</label>
+    <input type="number" id="day2" name="day2" min="10000" value="10000"><br>
+    
+    <label for="day3">Dzień 3:</label>
+    <input type="number" id="day3" name="day3" min="10000" value="10000"><br>
+    
+    <label for="day4">Dzień 4:</label>
+    <input type="number" id="day4" name="day4" min="10000" value="10000"><br>
+    
+    <label for="day5">Dzień 5:</label>
+    <input type="number" id="day5" name="day5" min="10000" value="10000"><br>
+    
+    <label for="day6">Dzień 6:</label>
+    <input type="number" id="day6" name="day6" min="10000" value="10000"><br>
+    
+    <label for="day7">Dzień 7:</label>
+    <input type="number" id="day7" name="day7" min="10000" value="10000"><br>
+
+    <button type="button" onclick="submitSteps()">Zapisz kroki</button>
+</form>
+
+<canvas id="stepsChart"></canvas>
+
 
     <script src="script.js"></script>
 </body>
