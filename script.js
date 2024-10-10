@@ -93,3 +93,79 @@ const progressChart = new Chart(ctx, {
         }
     }
 });
+// Funkcja do zapisu kroków do localStorage
+function saveSteps() {
+    const stepsInputs = document.querySelectorAll('#stepsForm input[type="number"]');
+    let stepsData = {};
+
+    stepsInputs.forEach((input) => {
+        stepsData[input.name] = input.value;  // Zapisujemy liczbę kroków dla każdego dnia
+    });
+
+    localStorage.setItem('stepsData', JSON.stringify(stepsData));  // Zapisujemy jako string w localStorage
+}
+
+// Funkcja do wczytania kroków z localStorage
+function loadSteps() {
+    const savedSteps = localStorage.getItem('stepsData');
+    if (savedSteps) {
+        const stepsData = JSON.parse(savedSteps);  // Odczytujemy dane z localStorage
+
+        const stepsInputs = document.querySelectorAll('#stepsForm input[type="number"]');
+        stepsInputs.forEach((input) => {
+            if (stepsData[input.name] !== undefined) {
+                input.value = stepsData[input.name];  // Odtwarzamy liczbę kroków
+            }
+        });
+    }
+    updateStepsChart();  // Zaktualizowanie wykresu na podstawie wczytanych danych
+}
+
+// Funkcja do śledzenia kroków i zapisywania ich
+function submitSteps() {
+    saveSteps();  // Zapisz kroki po kliknięciu
+    updateStepsChart();  // Zaktualizowanie wykresu po zapisaniu kroków
+}
+
+// Funkcja aktualizacji wykresu kroków
+function updateStepsChart() {
+    const stepsInputs = document.querySelectorAll('#stepsForm input[type="number"]');
+    let stepsData = [];
+    stepsInputs.forEach((input) => {
+        stepsData.push(parseInt(input.value));  // Dodajemy liczbę kroków do tablicy
+    });
+
+    stepsChart.data.datasets[0].data = stepsData;
+    stepsChart.update();
+}
+
+// Tworzenie wykresu kroków
+const ctxSteps = document.getElementById('stepsChart').getContext('2d');
+const stepsChart = new Chart(ctxSteps, {
+    type: 'bar',  // Użyjemy wykresu słupkowego (bar chart)
+    data: {
+        labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
+        datasets: [{
+            label: 'Liczba kroków',
+            data: [10000, 10000, 10000, 10000, 10000, 10000, 10000],  // Domyślne wartości
+            backgroundColor: 'rgba(39, 174, 96, 0.6)',
+            borderColor: 'rgba(39, 174, 96, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Wczytanie zapisanych danych kroków po załadowaniu strony
+window.onload = function() {
+    loadProgress();
+    updateChart();  // Aktualizujemy wykres postępów
+    loadSteps();    // Wczytujemy kroki
+};
