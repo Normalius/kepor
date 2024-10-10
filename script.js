@@ -23,6 +23,7 @@ function loadProgress() {
             }
         });
     }
+    updateChart();  // Zaktualizowanie wykresu na podstawie wczytanych danych
 }
 
 // Funkcja do śledzenia postępów i zapisywania ich
@@ -43,6 +44,7 @@ function submitActivity() {
     }
 
     saveProgress();  // Zapisz postępy po kliknięciu
+    updateChart();  // Zaktualizowanie wykresu po zapisaniu postępów
 }
 
 // Funkcja aktualizacji wykresu
@@ -64,7 +66,6 @@ function updateChart() {
 // Wczytanie zapisanych danych po załadowaniu strony
 window.onload = function() {
     loadProgress();
-    updateChart();  // Aktualizujemy wykres na podstawie zapisanych postępów
 };
 
 // Tworzenie wykresu
