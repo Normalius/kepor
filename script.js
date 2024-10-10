@@ -1,56 +1,70 @@
 // Funkcja do zapisu postępów do localStorage
-function saveProgress(progressData) {
+function saveProgress() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let progressData = {};
+
+    checkboxes.forEach((checkbox) => {
+        progressData[checkbox.name] = checkbox.checked;  // Przechowujemy stan zaznaczeń
+    });
+
     localStorage.setItem('activityProgress', JSON.stringify(progressData));  // Zapisujemy jako string w localStorage
 }
 
 // Funkcja do wczytania postępów z localStorage
 function loadProgress() {
     const savedProgress = localStorage.getItem('activityProgress');
-    return savedProgress ? JSON.parse(savedProgress) : {};  // Odczytujemy dane z localStorage lub zwracamy pusty obiekt
+    if (savedProgress) {
+        const progressData = JSON.parse(savedProgress);  // Odczytujemy dane z localStorage
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            if (progressData[checkbox.name] !== undefined) {
+                checkbox.checked = progressData[checkbox.name];  // Odtwarzamy stan checkboxów
+            }
+        });
+    }
 }
 
-// Funkcja do aktualizacji checkboxów na podstawie postępów
-function updateCheckboxes(progressData) {
+// Funkcja do śledzenia postępów i zapisywania ich
+function submitActivity() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let completedDays = [];
+    
     checkboxes.forEach((checkbox) => {
-        checkbox.checked = !!progressData[checkbox.name];  // Odtwarzamy stan checkboxów
-    });
-}
-
-// Funkcja śledzenia postępów i ich zapisu
-function trackAndSaveProgress() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let progressData = {};
-
-    checkboxes.forEach((checkbox) => {
-        progressData[checkbox.name] = checkbox.checked;
-    });
-
-    saveProgress(progressData);  // Zapisz postępy po kliknięciu
-}
-
-// Funkcja aktualizacji wykresu
-function updateChart(progressData) {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let chartData = [];
-
-    checkboxes.forEach((checkbox, index) => {
         if (checkbox.checked) {
-            chartData.push(30 + index * 5);  // przykładowe wartości
-        } else {
-            chartData.push(0);  // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
+            completedDays.push(checkbox.parentNode.textContent.trim());
         }
     });
 
-    progressChart.data.datasets[0].data = chartData;
+    if (completedDays.length > 0) {
+        alert('Zaznaczone dni: ' + completedDays.join(', '));
+    } else {
+        alert('Nie zaznaczono żadnych dni.');
+    }
+
+    saveProgress();  // Zapisz postępy po kliknięciu
+}
+
+// Funkcja aktualizacji wykresu
+function updateChart() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let progressData = [];
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            progressData.push(30 + index * 5);  // przykładowe wartości
+        } else {
+            progressData.push(0);  // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
+        }
+    });
+
+    progressChart.data.datasets[0].data = progressData;
     progressChart.update();
 }
 
 // Wczytanie zapisanych danych po załadowaniu strony
 window.onload = function() {
-    const progressData = loadProgress();
-    updateCheckboxes(progressData);
-    updateChart(progressData);  // Aktualizujemy wykres na podstawie zapisanych postępów
+    loadProgress();
+    updateChart();  // Aktualizujemy wykres na podstawie zapisanych postępów
 };
 
 // Tworzenie wykresu
@@ -78,10 +92,3 @@ const progressChart = new Chart(ctx, {
         }
     }
 });
-
-// Resetowanie postępów po zakończeniu wyzwania (opcjonalne)
-function resetProgress() {
-    localStorage.removeItem('activityProgress');
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-    updateChart({});  // Resetowanie wykresu
-}
