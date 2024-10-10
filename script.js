@@ -1,70 +1,56 @@
 // Funkcja do zapisu postępów do localStorage
-function saveProgress() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let progressData = {};
-
-    checkboxes.forEach((checkbox) => {
-        progressData[checkbox.name] = checkbox.checked;  // Przechowujemy stan zaznaczeń
-    });
-
+function saveProgress(progressData) {
     localStorage.setItem('activityProgress', JSON.stringify(progressData));  // Zapisujemy jako string w localStorage
 }
 
 // Funkcja do wczytania postępów z localStorage
 function loadProgress() {
     const savedProgress = localStorage.getItem('activityProgress');
-    if (savedProgress) {
-        const progressData = JSON.parse(savedProgress);  // Odczytujemy dane z localStorage
-
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach((checkbox) => {
-            if (progressData[checkbox.name] !== undefined) {
-                checkbox.checked = progressData[checkbox.name];  // Odtwarzamy stan checkboxów
-            }
-        });
-    }
+    return savedProgress ? JSON.parse(savedProgress) : {};  // Odczytujemy dane z localStorage lub zwracamy pusty obiekt
 }
 
-// Funkcja do śledzenia postępów i zapisywania ich
-function submitActivity() {
+// Funkcja do aktualizacji checkboxów na podstawie postępów
+function updateCheckboxes(progressData) {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let completedDays = [];
-    
     checkboxes.forEach((checkbox) => {
-        if (checkbox.checked) {
-            completedDays.push(checkbox.parentNode.textContent.trim());
-        }
+        checkbox.checked = !!progressData[checkbox.name];  // Odtwarzamy stan checkboxów
+    });
+}
+
+// Funkcja śledzenia postępów i ich zapisu
+function trackAndSaveProgress() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let progressData = {};
+
+    checkboxes.forEach((checkbox) => {
+        progressData[checkbox.name] = checkbox.checked;
     });
 
-    if (completedDays.length > 0) {
-        alert('Zaznaczone dni: ' + completedDays.join(', '));
-    } else {
-        alert('Nie zaznaczono żadnych dni.');
-    }
-
-    saveProgress();  // Zapisz postępy po kliknięciu
+    saveProgress(progressData);  // Zapisz postępy po kliknięciu
 }
 
 // Funkcja aktualizacji wykresu
-function updateChart() {
+function updateChart(progressData) {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let progressData = [];
+    let chartData = [];
+
     checkboxes.forEach((checkbox, index) => {
         if (checkbox.checked) {
-            progressData.push(30 + index * 5);  // przykładowe wartości
+            chartData.push(30 + index * 5);  // przykładowe wartości
         } else {
-            progressData.push(0);  // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
+            chartData.push(0);  // Jeśli dzień nie jest zaznaczony, wartość postępu to 0
         }
     });
 
-    progressChart.data.datasets[0].data = progressData;
+    progressChart.data.datasets[0].data = chartData;
     progressChart.update();
 }
 
 // Wczytanie zapisanych danych po załadowaniu strony
 window.onload = function() {
-    loadProgress();
-    updateChart();  // Aktualizujemy wykres na podstawie zapisanych postępów
+    const progressData = loadProgress();
+    updateCheckboxes(progressData);
+    updateChart(progressData);  // Aktualizujemy wykres na podstawie zapisanych postępów
 };
 
 // Tworzenie wykresu
@@ -92,3 +78,10 @@ const progressChart = new Chart(ctx, {
         }
     }
 });
+
+// Resetowanie postępów po zakończeniu wyzwania (opcjonalne)
+function resetProgress() {
+    localStorage.removeItem('activityProgress');
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+    updateChart({});  // Resetowanie wykresu
+}
