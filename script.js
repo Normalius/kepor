@@ -57,6 +57,14 @@ activityForm.addEventListener('submit', saveActivity);
 // Funkcja do czyszczenia danych
 clearDataButton.addEventListener('click', clearData);
 
+// Wyświetlanie danych po załadowaniu strony
+document.addEventListener('DOMContentLoaded', function() {
+    updateCharts();
+    displayStats();
+    displayNotes();
+});
+
+// Funkcja do zapisywania aktywności
 function saveActivity(event) {
     event.preventDefault();
 
@@ -102,17 +110,6 @@ function updateCharts() {
 
     timeChart.data.datasets[0].data = timeData;
     timeChart.update();
-}
-
-// Funkcja do czyszczenia danych
-function clearData() {
-    localStorage.removeItem('activityData');
-    stepsChart.data.datasets[0].data = [];
-    timeChart.data.datasets[0].data = [];
-    stepsChart.update();
-    timeChart.update();
-    displayStats();
-    displayNotes();
 }
 
 // Funkcja do wyświetlania statystyk
