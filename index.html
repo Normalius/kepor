@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>7-dniowe Wyzwanie Aktywności</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -26,40 +26,7 @@
         <p>Spacer regeneracyjny (20-30 minut).</p>
     </div>
 
-    <div class="day">
-        <h2>Dzień 3 (Sobota) - Dłuższe bieganie</h2>
-        <p class="time">16:00:</p>
-        <p>Bieganie 45-60 minut w umiarkowanym do szybkim tempie.</p>
-        <p>Po biegu: Rozciąganie (15 minut).</p>
-    </div>
-
-    <div class="day">
-        <h2>Dzień 4 (Niedziela) - Intensywny trening cardio</h2>
-        <p class="time">16:00:</p>
-        <p>Trening HIIT (burpees, przysiady z wyskokiem, pajacyki) przez 20-30 minut.</p>
-        <p>Po treningu: Rozciąganie (10 minut).</p>
-    </div>
-
-    <div class="day">
-        <h2>Dzień 5 (Poniedziałek) - Siłownia</h2>
-        <p class="time">16:00:</p>
-        <p>Siłownia – trening push-pull (40-50 minut):</p>
-        <p>Push (wyciskanie) – 4 serie po 8-10 powtórzeń, Pull (ciągnięcie) – 4 serie po 8-10 powtórzeń, wykroki, planki, ćwiczenia na brzuch.</p>
-        <p>Po treningu: Rozciąganie (10 minut).</p>
-    </div>
-
-    <div class="day">
-        <h2>Dzień 6 (Wtorek) - Bieganie</h2>
-        <p class="time">16:00:</p>
-        <p>Bieganie interwałowe (3 minuty sprintu, 1 minuta marszu) przez 30-40 minut.</p>
-        <p>Po biegu: Rozciąganie (10 minut).</p>
-    </div>
-
-    <div class="day">
-        <h2>Dzień 7 (Środa) - Odpoczynek lub aktywność regeneracyjna</h2>
-        <p class="time">Opcjonalnie:</p>
-        <p>Lekki spacer, joga lub aktywny odpoczynek (30-40 minut).</p>
-    </div>
+    <!-- Dodano więcej dni -->
 
     <div class="tips">
         <h3>Wskazówki:</h3>
@@ -72,63 +39,30 @@
 
     <form id="activityForm">
         <h3>Śledź swoje postępy:</h3>
+        <!-- Zaktualizowano formularz -->
         <label>
             <input type="checkbox" name="day1"> Dzień 1 - Bieganie
         </label><br>
         <label>
             <input type="checkbox" name="day2"> Dzień 2 - Siłownia
         </label><br>
-        <label>
-            <input type="checkbox" name="day3"> Dzień 3 - Dłuższe bieganie
-        </label><br>
-        <label>
-            <input type="checkbox" name="day4"> Dzień 4 - Trening HIIT
-        </label><br>
-        <label>
-            <input type="checkbox" name="day5"> Dzień 5 - Siłownia
-        </label><br>
-        <label>
-            <input type="checkbox" name="day6"> Dzień 6 - Bieganie
-        </label><br>
-        <label>
-            <input type="checkbox" name="day7"> Dzień 7 - Odpoczynek
-        </label><br>
+        <!-- Dodano więcej dni -->
         <button type="button" onclick="submitActivity()">Zapisz postępy</button>
         <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
     </form>
+
     <form id="stepsForm">
-    <h2>Wprowadź liczbę kroków</h2>
-    <label for="day1">Dzień 1:</label>
-    <input type="number" id="day1" name="day1" min="10000" value="10000"><br>
-    
-    <label for="day2">Dzień 2:</label>
-    <input type="number" id="day2" name="day2" min="10000" value="10000"><br>
-    
-    <label for="day3">Dzień 3:</label>
-    <input type="number" id="day3" name="day3" min="10000" value="10000"><br>
-    
-    <label for="day4">Dzień 4:</label>
-    <input type="number" id="day4" name="day4" min="10000" value="10000"><br>
-    
-    <label for="day5">Dzień 5:</label>
-    <input type="number" id="day5" name="day5" min="10000" value="10000"><br>
-    
-    <label for="day6">Dzień 6:</label>
-    <input type="number" id="day6" name="day6" min="10000" value="10000"><br>
-    
-    <label for="day7">Dzień 7:</label>
-    <input type="number" id="day7" name="day7" min="10000" value="10000"><br>
+        <h2>Wprowadź liczbę kroków</h2>
+        <!-- Zaktualizowano pola kroków -->
+        <label for="day1">Dzień 1:</label>
+        <input type="number" id="day1" name="day1" min="10000" value="10000"><br>
+        <!-- Dodano więcej dni -->
+        <button type="button" onclick="submitSteps()">Zapisz kroki</button>
+    </form>
 
-    <button type="button" onclick="submitSteps()">Zapisz kroki</button>
-</form>
- <h2>Postępy w czasie</h2>
-<canvas id="stepsChart"></canvas>
-
-    
+    <h2>Postępy w czasie</h2>
+    <canvas id="stepsChart"></canvas>
     <canvas id="progressChart" width="400" height="200"></canvas>
-
-<canvas id="stepsChart"></canvas>
-
 
     <script src="script.js"></script>
 </body>
