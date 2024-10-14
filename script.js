@@ -169,24 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     displayQuote();
 
-    // Udostępnianie postępów
-    function shareProgress() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        const progress = Object.entries(activityData)
-            .map(([day, data]) => `Dzień ${day}: ${data.steps} kroków, ${data.time} min`)
-            .join('\n');
-        const shareText = `Oto moje postępy:\n${progress}`;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Moje postępy w wyzwaniu!',
-                text: shareText
-            }).then(() => console.log('Udostępniono pomyślnie'))
-              .catch(error => console.log('Błąd podczas udostępniania:', error));
-        } else {
-            alert(shareText);
-        }
-    }
-
     // Zmiana kolorów wykresów
     function changeChartColors() {
         const stepsColor = prompt("Podaj kolor dla wykresu kroków (np. rgba(75, 192, 192, 1)):");
