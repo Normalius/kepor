@@ -1,129 +1,66 @@
-// Zapis postępów do localStorage
-function saveProgress() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let progressData = {};
-
-    checkboxes.forEach((checkbox) => {
-        progressData[checkbox.name] = checkbox.checked;
-    });
-
-    localStorage.setItem('activityProgress', JSON.stringify(progressData));
-}
-
-// Wczytanie postępów z localStorage
-function loadProgress() {
-    const savedProgress = localStorage.getItem('activityProgress');
-    if (savedProgress) {
-        const progressData = JSON.parse(savedProgress);
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach((checkbox) => {
-            if (progressData[checkbox.name] !== undefined) {
-                checkbox.checked = progressData[checkbox.name];
-            }
-        });
-    }
-    updateChart();
-}
-
-// Funkcja do śledzenia postępów
-function submitActivity() {
-    saveProgress();
-    updateChart();
-}
-
-// Aktualizacja wykresu aktywności
-function updateChart() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let progressData = [];
-    checkboxes.forEach((checkbox, index) => {
-        progressData.push(checkbox.checked ? 30 + index * 5 : 0);
-    });
-
-    progressChart.data.datasets[0].data = progressData;
-    progressChart.update();
-}
-
-// Zapis kroków do localStorage
-function saveSteps() {
-    const stepsInputs = document.querySelectorAll('#stepsForm input[type="number"]');
-    let stepsData = {};
-
-    stepsInputs.forEach((input) => {
-        stepsData[input.name] = input.value;
-    });
-
+// Zapisanie danych w LocalStorage
+function saveSteps(day, steps) {
+    let stepsData = JSON.parse(localStorage.getItem('stepsData')) || {};
+    stepsData[day] = steps;
     localStorage.setItem('stepsData', JSON.stringify(stepsData));
 }
 
-// Wczytanie kroków z localStorage
+// Załadowanie danych z LocalStorage
 function loadSteps() {
-    const savedSteps = localStorage.getItem('stepsData');
-    if (savedSteps) {
-        const stepsData = JSON.parse(savedSteps);
-        const stepsInputs = document.querySelectorAll('#stepsForm input[type="number"]');
-        stepsInputs.forEach((input) => {
-            if (stepsData[input.name] !== undefined) {
-                input.value = stepsData[input.name];
-            }
-        });
+    let stepsData = JSON.parse(localStorage.getItem('stepsData')) || {};
+    let stepsArray = [];
+
+    for (let i = 1; i <= 7; i++) {
+        stepsArray.push(stepsData[`day${i}`] || 0);
     }
-    updateStepsChart();
+
+    updateStepsChart(stepsArray); // Wywołanie funkcji updateStepsChart
 }
 
-// Funkcja do śledzenia kroków
-function submitSteps() {
-    saveSteps();
-    updateStepsChart();
-}
-
-// Wykres kroków
-const stepsCtx = document.getElementById('stepsChart').getContext('2d');
-let stepsChart = new Chart(stepsCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
-        datasets: [{
-            label: 'Liczba kroków',
-            data: [10000, 10000, 10000, 10000, 10000, 10000, 10000],
-            backgroundColor: 'rgba(52, 152, 219, 0.7)',
-            borderColor: 'rgba(52, 152, 219, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+// Funkcja aktualizująca wykres z krokami
+function updateStepsChart(stepsData) {
+    const ctx = document.getElementById('stepsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            datasets: [{
+                label: 'Steps',
+                data: stepsData,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
+    });
+}
+
+// Funkcja przypisywania kroków
+function assignSteps(day, steps) {
+    saveSteps(day, steps);
+    loadSteps(); // Załadowanie i aktualizacja wykresu po dodaniu kroków
+}
+
+// Nasłuchiwanie na kliknięcie przycisku dodawania kroków
+document.getElementById('saveStepsButton').addEventListener('click', function () {
+    const day = document.getElementById('daySelector').value;
+    const steps = parseInt(document.getElementById('stepsInput').value);
+
+    if (!isNaN(steps)) {
+        assignSteps(day, steps);
+    } else {
+        alert('Please enter a valid number of steps.');
     }
 });
 
-// Wykres postępów
-const progressCtx = document.getElementById('progressChart').getContext('2d');
-let progressChart = new Chart(progressCtx, {
-    type: 'line',
-    data: {
-        labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
-        datasets: [{
-            label: 'Postępy w ćwiczeniach',
-            data: [0, 0, 0, 0, 0, 0, 0],
-            backgroundColor: 'rgba(46, 204, 113, 0.2)',
-            borderColor: 'rgba(46, 204, 113, 1)',
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-
-// Ładowanie postępów i kroków przy starcie
-window.onload = function() {
-    loadProgress();
-    loadSteps();
+// Inicjalizacja wykresu po załadowaniu strony
+window.onload = function () {
+    loadSteps(); // Załadowanie danych i wykresu przy starcie
 };
