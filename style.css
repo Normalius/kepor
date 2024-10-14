@@ -1,94 +1,91 @@
-* {
-    box-sizing: border-box; /* Umożliwia lepsze zarządzanie rozmiarami elementów */
-}
-
-html, body {
-    margin: 0; /* Usuwa domyślne marginesy */
-    display: flex;
-    justify-content: center; /* Centruje zawartość w poziomie */
-    align-items: flex-start; /* Umożliwia przewijanie */
-    padding: 20px; /* Dodaje padding, aby nie przyklejać elementów do krawędzi */
-    overflow: auto; /* Pozwala na przewijanie */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
 }
 
 .container {
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    width: 100%;
-    max-width: 600px;
-    transition: box-shadow 0.3s ease;
-}
-
-.container:hover {
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+}
+
+nav {
+    background-color: #333;
+    color: white;
+    margin: 20px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 label {
-    font-weight: bold;
-    color: #333;
+    display: block;
+    margin: 10px 0 5px;
 }
 
-input, select, button {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ddd;
+input, textarea, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%; /* Umożliwia pełne wykorzystanie szerokości kontenera */
-    transition: border-color 0.3s;
-}
-
-input:focus, select:focus {
-    border-color: #28a745;
-    outline: none;
 }
 
 button {
+    padding: 10px 15px;
     background-color: #28a745;
-    color: #fff;
+    color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
     background-color: #218838;
-    transform: scale(1.02);
 }
 
 .chart-container {
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
-canvas {
+#motivationalQuote {
+    font-style: italic;
     margin-top: 20px;
-    max-width: 100%; /* Zapewnia, że wykres nie wychodzi poza kontener */
+    text-align: center;
 }
 
 @media (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    input, select, button {
-        font-size: 14px;
+    nav ul {
+        flex-direction: column;
+        align-items: center;
     }
 }
