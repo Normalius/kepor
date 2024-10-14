@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Day Fitness Challenge</title>
+    <title>7-Dniowe Wyzwanie Aktywności</title>
     <link rel="stylesheet" href="style.css">
-</head>
-    <title>7-Day Fitness Challenge</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>7-Dniowe Wyzwanie Aktywności</h1>
+        
+        <nav>
+            <ul>
+                <li><a href="#charts">Wykresy</a></li>
+                <li><a href="#statistics">Statystyki</a></li>
+                <li><a href="#notes">Notatki</a></li>
+            </ul>
+        </nav>
+        
         <form id="activityForm">
-            <label for="day">Wybierz dzień:</label>
+            <label for="day">Wybierz Dzień:</label>
             <select id="day">
                 <option value="1">Dzień 1</option>
                 <option value="2">Dzień 2</option>
@@ -24,22 +31,34 @@
                 <option value="7">Dzień 7</option>
             </select>
 
-            <label for="steps">Wprowadź kroki:</label>
+            <label for="steps">Wprowadź Kroki:</label>
             <input type="number" id="steps" placeholder="np. 5000">
 
-            <label for="time">Czas ćwiczeń (minuty):</label>
+            <label for="time">Czas Ćwiczeń (minuty):</label>
             <input type="number" id="time" placeholder="np. 30">
 
-            <button type="submit">Zapisz aktywność</button>
+            <label for="goalSteps">Cel kroków:</label>
+            <input type="number" id="goalSteps" placeholder="np. 10000">
+
+            <label for="goalTime">Cel czasu (minuty):</label>
+            <input type="number" id="goalTime" placeholder="np. 60">
+
+            <label for="notes">Notatki:</label>
+            <textarea id="notes" placeholder="Wpisz swoje notatki..."></textarea>
+
+            <button type="submit">Zapisz Aktywność</button>
         </form>
 
-        <div class="chart-container">
+        <div id="motivationalQuote"></div>
+        <button onclick="shareProgress()">Udostępnij postępy</button>
+        <button onclick="changeChartColors()">Zmień kolory wykresów</button>
+
+        <div class="chart-container" id="charts">
             <canvas id="stepsChart"></canvas>
             <canvas id="timeChart"></canvas>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
