@@ -12,7 +12,6 @@ body {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 20px; /* Dodaje padding, aby nie przyklejać elementów do krawędzi */
 }
 
