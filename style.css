@@ -5,13 +5,13 @@ body {
     color: #333;
     margin: 0;
     padding: 20px;
-    line-height: 1.6;  /* Zwiększenie odstępu między wierszami */
+    line-height: 1.6;
 }
 
 h1 {
     text-align: center;
     color: #2c3e50;
-    font-size: 2.5em;  /* Zwiększenie rozmiaru nagłówka */
+    font-size: 2.5em;
     margin-bottom: 20px;
 }
 
@@ -25,26 +25,25 @@ h2 {
 .day {
     background: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 8px;  /* Zaokrąglone rogi */
+    border-radius: 8px;
     padding: 20px;
     margin: 15px 0;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Animacja */
-    cursor: pointer;  /* Dodanie kursora wskazującego */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
 }
 
 .day:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);  /* Lekka animacja podnoszenia */
+    transform: translateY(-5px);
 }
 
-/* Tekst czasu */
 .time {
     font-weight: bold;
     color: #27ae60;
     font-size: 1.1em;
 }
 
-/* Styl dla sekcji porad */
+/* Porady */
 .tips {
     background: #f9cbd2;
     padding: 15px;
@@ -53,7 +52,7 @@ h2 {
     border-radius: 5px;
 }
 
-/* Formularz */
+/* Formularze */
 form {
     margin-top: 20px;
     padding: 15px;
@@ -64,28 +63,19 @@ form {
 }
 
 form:hover {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);  /* Efekt hover na formularzu */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 input[type="checkbox"] {
     margin-right: 10px;
-    transform: scale(1.2);  /* Zwiększenie rozmiaru checkboxów */
-    transition: transform 0.2s ease;  /* Dodanie animacji */
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
 }
 
 input[type="checkbox"]:hover {
-    transform: scale(1.3);  /* Powiększenie checkboxa po najechaniu */
+    transform: scale(1.3);
 }
 
-/* Style dla wykresu */
-canvas {
-    margin: 20px auto;
-    display: block;
-    max-width: 100%;  /* Skalowanie wykresu dla małych ekranów */
-    height: auto;
-}
-
-/* Styl dla przycisków (opcjonalnie, jeśli masz przyciski w formularzu) */
 button {
     background-color: #2980b9;
     color: white;
@@ -94,14 +84,21 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 1em;
 }
 
 button:hover {
-    background-color: #1a5276;  /* Ciemniejszy odcień po najechaniu */
+    background-color: #1a5276;
 }
 
-/* Responsywność dla urządzeń mobilnych */
+/* Wykresy */
+canvas {
+    margin: 20px auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsywność */
 @media (max-width: 600px) {
     body {
         padding: 10px;
