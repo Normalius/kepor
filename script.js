@@ -168,18 +168,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     displayQuote();
-
-    // Zmiana kolorów wykresów
-    function changeChartColors() {
-        const stepsColor = prompt("Podaj kolor dla wykresu kroków (np. rgba(75, 192, 192, 1)):");
-        const timeColor = prompt("Podaj kolor dla wykresu czasu (np. rgba(153, 102, 255, 1)):");
-
-        stepsChart.data.datasets[0].backgroundColor = stepsColor;
-        stepsChart.data.datasets[0].borderColor = stepsColor;
-        timeChart.data.datasets[0].backgroundColor = timeColor;
-        timeChart.data.datasets[0].borderColor = timeColor;
-
-        stepsChart.update();
-        timeChart.update();
-    }
-});
