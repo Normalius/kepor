@@ -1,38 +1,42 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Fitness Challenge</title>
     <link rel="stylesheet" href="style.css">
-    <title>7-dniowe Wyzwanie Aktywności</title>
 </head>
 <body>
     <div class="container">
-        <h1>7-dniowe Wyzwanie Aktywności</h1>
+        <h1>7-Day Fitness Challenge</h1>
         <form id="activityForm">
-            <label for="day">Dzień:</label>
+            <label for="day">Select Day:</label>
             <select id="day">
-                <option value="1">Dzień 1</option>
-                <option value="2">Dzień 2</option>
-                <option value="3">Dzień 3</option>
-                <option value="4">Dzień 4</option>
-                <option value="5">Dzień 5</option>
-                <option value="6">Dzień 6</option>
-                <option value="7">Dzień 7</option>
+                <option value="1">Day 1</option>
+                <option value="2">Day 2</option>
+                <option value="3">Day 3</option>
+                <option value="4">Day 4</option>
+                <option value="5">Day 5</option>
+                <option value="6">Day 6</option>
+                <option value="7">Day 7</option>
             </select>
 
-            <label for="steps">Liczba kroków:</label>
-            <input type="number" id="steps" placeholder="Wprowadź liczbę kroków" required>
+            <label for="steps">Enter Steps:</label>
+            <input type="number" id="steps" placeholder="e.g., 5000">
 
-            <button type="submit">Dodaj kroki</button>
+            <label for="time">Exercise Time (minutes):</label>
+            <input type="number" id="time" placeholder="e.g., 30">
+
+            <button type="submit">Save Activity</button>
         </form>
 
         <div class="chart-container">
             <canvas id="stepsChart"></canvas>
+            <canvas id="timeChart"></canvas>
         </div>
     </div>
 
-    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js "></script>
-    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
