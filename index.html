@@ -32,16 +32,16 @@
             </select>
 
             <label for="steps">Wprowadź Kroki:</label>
-            <input type="number" id="steps" placeholder="np. 5000" required>
+            <input type="number" id="steps" min="0" placeholder="np. 5000" required>
 
             <label for="time">Czas Ćwiczeń (minuty):</label>
-            <input type="number" id="time" placeholder="np. 30" required>
+            <input type="number" id="time" min="0" placeholder="np. 30" required>
 
             <label for="goalSteps">Cel kroków:</label>
-            <input type="number" id="goalSteps" placeholder="np. 10000">
+            <input type="number" id="goalSteps" min="0" placeholder="np. 10000">
 
             <label for="goalTime">Cel czasu (minuty):</label>
-            <input type="number" id="goalTime" placeholder="np. 60">
+            <input type="number" id="goalTime" min="0" placeholder="np. 60">
 
             <label for="notes">Notatki:</label>
             <textarea id="notes" placeholder="Wpisz swoje notatki..."></textarea>
