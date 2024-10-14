@@ -1,134 +1,42 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-dniowe Wyzwanie Aktywności</title>
+    <title>7-Day Fitness Challenge</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>7-dniowe Wyzwanie Aktywności</h1>
+    <div class="container">
+        <h1>7-Day Fitness Challenge</h1>
+        <form id="activityForm">
+            <label for="day">Select Day:</label>
+            <select id="day">
+                <option value="1">Day 1</option>
+                <option value="2">Day 2</option>
+                <option value="3">Day 3</option>
+                <option value="4">Day 4</option>
+                <option value="5">Day 5</option>
+                <option value="6">Day 6</option>
+                <option value="7">Day 7</option>
+            </select>
 
-    <!-- Dzień 1 -->
-    <div class="day">
-        <h2>Dzień 1 (Czwartek) - Bieganie</h2>
-        <p class="time">16:00:</p>
-        <p>Bieganie interwałowe (2 minuty sprintu, 1 minuta marszu) przez 30-40 minut.</p>
-        <p>Po biegu: Rozciąganie dynamiczne (10 minut).</p>
+            <label for="steps">Enter Steps:</label>
+            <input type="number" id="steps" placeholder="e.g., 5000">
+
+            <label for="time">Exercise Time (minutes):</label>
+            <input type="number" id="time" placeholder="e.g., 30">
+
+            <button type="submit">Save Activity</button>
+        </form>
+
+        <div class="chart-container">
+            <canvas id="stepsChart"></canvas>
+            <canvas id="timeChart"></canvas>
+        </div>
     </div>
 
-    <!-- Dzień 2 -->
-    <div class="day">
-        <h2>Dzień 2 (Piątek) - Siłownia</h2>
-        <p class="time">Rano (przed pracą):</p>
-        <p>Intensywny trening siłowy (30-40 minut).</p>
-        <p>4 serie po 8-10 powtórzeń dla każdego ćwiczenia: przysiady ze sztangą, martwy ciąg, wyciskanie na ławce, podciąganie, wiosłowanie.</p>
-        <p class="time">16:00:</p>
-        <p>Spacer regeneracyjny (20-30 minut).</p>
-    </div>
-
-    <!-- Dzień 3 -->
-    <div class="day">
-        <h2>Dzień 3 (Sobota) - Bieganie</h2>
-        <p class="time">16:00:</p>
-        <p>Dłuższe bieganie (5 km spokojnym tempem).</p>
-        <p>Po biegu: Rozciąganie statyczne (15 minut).</p>
-    </div>
-
-    <!-- Dzień 4 -->
-    <div class="day">
-        <h2>Dzień 4 (Niedziela) - Odpoczynek aktywny</h2>
-        <p class="time">16:00:</p>
-        <p>Joga lub rozciąganie (30 minut).</p>
-        <p>Spacer regeneracyjny (20-30 minut).</p>
-    </div>
-
-    <!-- Dzień 5 -->
-    <div class="day">
-        <h2>Dzień 5 (Poniedziałek) - Siłownia</h2>
-        <p class="time">16:00:</p>
-        <p>Intensywny trening siłowy (30-40 minut).</p>
-        <p>4 serie po 8-10 powtórzeń dla każdego ćwiczenia: przysiady, martwy ciąg, wyciskanie na ławce, podciąganie, wiosłowanie.</p>
-    </div>
-
-    <!-- Dzień 6 -->
-    <div class="day">
-        <h2>Dzień 6 (Wtorek) - Bieganie</h2>
-        <p class="time">16:00:</p>
-        <p>Bieganie interwałowe (2 minuty sprintu, 1 minuta marszu) przez 30-40 minut.</p>
-        <p>Po biegu: Rozciąganie dynamiczne (10 minut).</p>
-    </div>
-
-    <!-- Dzień 7 -->
-    <div class="day">
-        <h2>Dzień 7 (Środa) - Odpoczynek aktywny</h2>
-        <p class="time">16:00:</p>
-        <p>Joga lub rozciąganie (30 minut).</p>
-        <p>Spacer regeneracyjny (20-30 minut).</p>
-    </div>
-
-    <div class="tips">
-        <h3>Wskazówki:</h3>
-        <ul>
-            <li>Zwiększ intensywność w miarę postępów, dodawaj obciążenie w siłowni.</li>
-            <li>Pamiętaj o odpowiednim nawodnieniu i odżywianiu.</li>
-            <li>Słuchaj swojego ciała; jeśli czujesz się przemęczony, zmniejsz intensywność.</li>
-        </ul>
-    </div>
-
-    <!-- Formularz postępów -->
-    <form id="activityForm">
-        <h3>Śledź swoje postępy:</h3>
-        <label>
-            <input type="checkbox" name="day1"> Dzień 1 - Bieganie
-        </label><br>
-        <label>
-            <input type="checkbox" name="day2"> Dzień 2 - Siłownia
-        </label><br>
-        <label>
-            <input type="checkbox" name="day3"> Dzień 3 - Bieganie
-        </label><br>
-        <label>
-            <input type="checkbox" name="day4"> Dzień 4 - Odpoczynek aktywny
-        </label><br>
-        <label>
-            <input type="checkbox" name="day5"> Dzień 5 - Siłownia
-        </label><br>
-        <label>
-            <input type="checkbox" name="day6"> Dzień 6 - Bieganie
-        </label><br>
-        <label>
-            <input type="checkbox" name="day7"> Dzień 7 - Odpoczynek aktywny
-        </label><br>
-        <button type="button" onclick="submitActivity()">Zapisz postępy</button>
-        <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
-    </form>
-
-    <!-- Formularz kroków -->
-    <form id="stepsForm">
-        <h2>Wprowadź liczbę kroków</h2>
-        <label for="day1">Dzień 1:</label>
-        <input type="number" id="day1" name="day1" min="10000" value="10000"><br>
-        <label for="day2">Dzień 2:</label>
-        <input type="number" id="day2" name="day2" min="10000" value="10000"><br>
-        <label for="day3">Dzień 3:</label>
-        <input type="number" id="day3" name="day3" min="10000" value="10000"><br>
-        <label for="day4">Dzień 4:</label>
-        <input type="number" id="day4" name="day4" min="10000" value="10000"><br>
-        <label for="day5">Dzień 5:</label>
-        <input type="number" id="day5" name="day5" min="10000" value="10000"><br>
-        <label for="day6">Dzień 6:</label>
-        <input type="number" id="day6" name="day6" min="10000" value="10000"><br>
-        <label for="day7">Dzień 7:</label>
-        <input type="number" id="day7" name="day7" min="10000" value="10000"><br>
-        <button type="button" onclick="submitSteps()">Zapisz kroki</button>
-    </form>
-
-    <h2>Postępy w czasie</h2>
-    <canvas id="stepsChart"></canvas>
-    <canvas id="progressChart" width="400" height="200"></canvas>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
