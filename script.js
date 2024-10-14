@@ -144,6 +144,15 @@ function displayNotes() {
     }
 }
 
+// Funkcja do czyszczenia danych
+function clearData() {
+    localStorage.removeItem('activityData'); // Usuwa dane z lokalnego storage
+    updateCharts(); // Aktualizuje wykresy
+    displayStats(); // Wyświetla zaktualizowane statystyki
+    displayNotes(); // Wyświetla zaktualizowane notatki
+    alert('Wszystkie dane zostały usunięte.'); // Potwierdzenie dla użytkownika
+}
+
 // Motywacyjne cytaty
 const quotes = [
     "Nie czekaj na odpowiedni moment. Stwórz go!",
