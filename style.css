@@ -1,12 +1,18 @@
+* {
+    box-sizing: border-box; /* Umożliwia lepsze zarządzanie rozmiarami elementów */
+}
+
+html, body {
+    height: 100%; /* Zapewnia, że body zajmuje całą wysokość ekranu */
+    margin: 0; /* Usuwa domyślne marginesy */
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .container {
