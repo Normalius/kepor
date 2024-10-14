@@ -95,7 +95,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 button {
-    padding: 8px 12px;
+    padding: 6px 10px; /* Mniejsze padding */
     background: linear-gradient(45deg, var(--primary-color), #007bff);
     color: var(--white);
     border: none;
@@ -104,6 +104,7 @@ button {
     font-size: 14px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background 0.3s, transform 0.2s;
+    margin: 5px; /* Dodany margines, aby uniknąć nachodzenia */
 }
 
 button:hover {
