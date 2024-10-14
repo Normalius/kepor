@@ -3,7 +3,6 @@
 }
 
 html, body {
-    height: 100%; /* Zapewnia, że body zajmuje całą wysokość ekranu */
     margin: 0; /* Usuwa domyślne marginesy */
     display: flex;
     justify-content: center; /* Centruje zawartość w poziomie */
