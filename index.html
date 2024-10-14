@@ -32,10 +32,10 @@
             </select>
 
             <label for="steps">Wprowadź Kroki:</label>
-            <input type="number" id="steps" placeholder="np. 5000">
+            <input type="number" id="steps" placeholder="np. 5000" required>
 
             <label for="time">Czas Ćwiczeń (minuty):</label>
-            <input type="number" id="time" placeholder="np. 30">
+            <input type="number" id="time" placeholder="np. 30" required>
 
             <label for="goalSteps">Cel kroków:</label>
             <input type="number" id="goalSteps" placeholder="np. 10000">
@@ -47,6 +47,7 @@
             <textarea id="notes" placeholder="Wpisz swoje notatki..."></textarea>
 
             <button type="submit">Zapisz Aktywność</button>
+            <button type="button" id="clearData">Wyczyść Dane</button>
         </form>
 
         <div id="motivationalQuote"></div>
@@ -56,6 +57,16 @@
         <div class="chart-container" id="charts">
             <canvas id="stepsChart"></canvas>
             <canvas id="timeChart"></canvas>
+        </div>
+
+        <div id="statistics">
+            <h2>Statystyki</h2>
+            <div id="statsContent"></div>
+        </div>
+        
+        <div id="notesContainer">
+            <h2>Notatki</h2>
+            <div id="notesList"></div>
         </div>
     </div>
 
