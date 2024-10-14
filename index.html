@@ -105,34 +105,25 @@
         <button type="button" onclick="updateChart()">Aktualizuj wykres</button>
     </form>
 
-        <!-- Wykres kroków -->
-        <h2>Steps Progress</h2>
-        <canvas id="stepsChart" width="400" height="200"></canvas>
-    </div>
-
-    <script>
-        const ctx = document.getElementById('stepsChart').getContext('2d');
-        const stepsChart = new Chart(ctx, {
-            type: 'line',  // Możesz zmienić na 'bar' jeśli chcesz wykres słupkowy
-            data: {
-                labels: ['Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday'], // Dni tygodnia
-                datasets: [{
-                    label: 'Number of Steps',
-                    data: [5000, 7000, 8000, 6000, 9000, 10000, 12000],  // Przykładowe dane kroków
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
+    <!-- Formularz kroków -->
+    <form id="stepsForm">
+        <h2>Wprowadź liczbę kroków</h2>
+        <label for="day1">Dzień 1:</label>
+        <input type="number" id="day1" name="day1" min="10000" value="10000"><br>
+        <label for="day2">Dzień 2:</label>
+        <input type="number" id="day2" name="day2" min="10000" value="10000"><br>
+        <label for="day3">Dzień 3:</label>
+        <input type="number" id="day3" name="day3" min="10000" value="10000"><br>
+        <label for="day4">Dzień 4:</label>
+        <input type="number" id="day4" name="day4" min="10000" value="10000"><br>
+        <label for="day5">Dzień 5:</label>
+        <input type="number" id="day5" name="day5" min="10000" value="10000"><br>
+        <label for="day6">Dzień 6:</label>
+        <input type="number" id="day6" name="day6" min="10000" value="10000"><br>
+        <label for="day7">Dzień 7:</label>
+        <input type="number" id="day7" name="day7" min="10000" value="10000"><br>
+        <button type="button" onclick="submitSteps()">Zapisz kroki</button>
+    </form>
 
     <h2>Postępy w czasie</h2>
     <canvas id="stepsChart"></canvas>
