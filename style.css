@@ -83,6 +83,14 @@ button:hover {
     text-align: center;
 }
 
+#statistics, #notesContainer {
+    margin-top: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 600px) {
     nav ul {
         flex-direction: column;
