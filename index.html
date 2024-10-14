@@ -1,42 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Day Fitness Challenge</title>
+    <title>7-dniowe wyzwanie aktywności</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>7-Day Fitness Challenge</h1>
-        <form id="activityForm">
-            <label for="day">Select Day:</label>
-            <select id="day">
-                <option value="1">Day 1</option>
-                <option value="2">Day 2</option>
-                <option value="3">Day 3</option>
-                <option value="4">Day 4</option>
-                <option value="5">Day 5</option>
-                <option value="6">Day 6</option>
-                <option value="7">Day 7</option>
-            </select>
-
-            <label for="steps">Enter Steps:</label>
-            <input type="number" id="steps" placeholder="e.g., 5000">
-
-            <label for="time">Exercise Time (minutes):</label>
-            <input type="number" id="time" placeholder="e.g., 30">
-
-            <button type="submit">Save Activity</button>
-        </form>
-
-        <div class="chart-container">
+        <h1>7-dniowe wyzwanie aktywności</h1>
+        <div id="weekDays">
+            <div class="day">
+                <h2>Dzień 1</h2>
+                <label for="steps1">Kroki:</label>
+                <input type="number" id="steps1" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 2</h2>
+                <label for="steps2">Kroki:</label>
+                <input type="number" id="steps2" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 3</h2>
+                <label for="steps3">Kroki:</label>
+                <input type="number" id="steps3" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 4</h2>
+                <label for="steps4">Kroki:</label>
+                <input type="number" id="steps4" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 5</h2>
+                <label for="steps5">Kroki:</label>
+                <input type="number" id="steps5" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 6</h2>
+                <label for="steps6">Kroki:</label>
+                <input type="number" id="steps6" value="0">
+            </div>
+            <div class="day">
+                <h2>Dzień 7</h2>
+                <label for="steps7">Kroki:</label>
+                <input type="number" id="steps7" value="0">
+            </div>
+        </div>
+        <button id="submitBtn">Zapisz kroki</button>
+        <div id="chartContainer">
             <canvas id="stepsChart"></canvas>
-            <canvas id="timeChart"></canvas>
         </div>
     </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
