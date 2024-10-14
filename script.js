@@ -22,9 +22,9 @@ const timeCtx = document.getElementById('timeChart').getContext('2d');
 let stepsChart = new Chart(stepsCtx, {
     type: 'bar',
     data: {
-        labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+        labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
         datasets: [{
-            label: 'Steps',
+            label: 'Kroki',
             data: [],
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -43,9 +43,9 @@ let stepsChart = new Chart(stepsCtx, {
 let timeChart = new Chart(timeCtx, {
     type: 'line',
     data: {
-        labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+        labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
         datasets: [{
-            label: 'Exercise Time (minutes)',
+            label: 'Czas ćwiczeń (minuty)',
             data: [],
             backgroundColor: 'rgba(153, 102, 255, 0.2)',
             borderColor: 'rgba(153, 102, 255, 1)',
