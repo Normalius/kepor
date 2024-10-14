@@ -95,18 +95,20 @@ input:focus, textarea:focus, select:focus {
 }
 
 button {
-    padding: 10px 15px;
-    background-color: var(--primary-color);
+    padding: 8px 12px;
+    background: linear-gradient(45deg, var(--primary-color), #007bff);
     color: var(--white);
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: var(--secondary-color);
-    transform: scale(1.05);
+    background: linear-gradient(45deg, #218838, #0056b3);
+    transform: translateY(-2px);
 }
 
 .chart-container {
