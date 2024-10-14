@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #007bff; /* Jasnoniebieski */
-    --secondary-color: #0056b3; /* Ciemniejszy niebieski */
+    --primary-color: #28a745; /* Zielony */
+    --secondary-color: #218838; /* Ciemniejszy zielony */
     --background-color: #f0f0f0; /* Jasnoszary */
     --white: #ffffff; /* Biały */
     --shadow: rgba(0, 0, 0, 0.1); /* Cień */
@@ -96,7 +96,7 @@ input:focus, textarea:focus, select:focus {
 
 button {
     padding: 6px 10px; /* Mniejsze padding */
-    background: linear-gradient(45deg, var(--primary-color), #66b3ff); /* Zmiana koloru na gradient niebieski */
+    background: linear-gradient(45deg, var(--primary-color), #66d99b); /* Zmiana koloru na gradient zielony */
     color: var(--white);
     border: none;
     border-radius: 20px;
@@ -108,7 +108,7 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(45deg, #0056b3, #0099ff); /* Zmiana koloru na ciemniejszy niebieski */
+    background: linear-gradient(45deg, #218838, #3bd172); /* Zmiana koloru na ciemniejszy zielony */
     transform: translateY(-2px);
 }
 
