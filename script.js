@@ -71,6 +71,13 @@ function saveActivity(event) {
     const day = document.getElementById('day').value;
     const steps = parseInt(document.getElementById('steps').value);
     const time = parseInt(document.getElementById('time').value);
+
+    // Walidacja, aby nie dopuścić do wprowadzenia ujemnych wartości
+    if (steps < 0 || time < 0) {
+        alert("Liczba kroków i czas ćwiczeń nie mogą być ujemne!");
+        return;
+    }
+    
     const notes = notesInput.value;
     const goalSteps = goalStepsInput.value ? parseInt(goalStepsInput.value) : null;
     const goalTime = goalTimeInput.value ? parseInt(goalTimeInput.value) : null;
