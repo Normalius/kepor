@@ -1,9 +1,9 @@
 :root {
-    --primary-color: #28a745;
-    --secondary-color: #218838;
-    --background-color: #f0f0f0;
-    --white: #ffffff;
-    --shadow: rgba(0, 0, 0, 0.1);
+    --primary-color: #007bff; /* Jasnoniebieski */
+    --secondary-color: #0056b3; /* Ciemniejszy niebieski */
+    --background-color: #f0f0f0; /* Jasnoszary */
+    --white: #ffffff; /* Biały */
+    --shadow: rgba(0, 0, 0, 0.1); /* Cień */
 }
 
 body {
@@ -96,7 +96,7 @@ input:focus, textarea:focus, select:focus {
 
 button {
     padding: 6px 10px; /* Mniejsze padding */
-    background: linear-gradient(45deg, var(--primary-color), #007bff);
+    background: linear-gradient(45deg, var(--primary-color), #66b3ff); /* Zmiana koloru na gradient niebieski */
     color: var(--white);
     border: none;
     border-radius: 20px;
@@ -108,7 +108,7 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(45deg, #218838, #0056b3);
+    background: linear-gradient(45deg, #0056b3, #0099ff); /* Zmiana koloru na ciemniejszy niebieski */
     transform: translateY(-2px);
 }
 
