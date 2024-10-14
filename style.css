@@ -2,9 +2,15 @@
     box-sizing: border-box; /* Umożliwia lepsze zarządzanie rozmiarami elementów */
 }
 
+
 html, body {
     height: 100%; /* Zapewnia, że body zajmuje całą wysokość ekranu */
     margin: 0; /* Usuwa domyślne marginesy */
+    display: flex;
+    justify-content: center; /* Centruje zawartość w poziomie */
+    align-items: flex-start; /* Umożliwia przewijanie */
+    padding: 20px; /* Dodaje padding, aby nie przyklejać elementów do krawędzi */
+    overflow: auto; /* Pozwala na przewijanie */
 }
 
 body {
