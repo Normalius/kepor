@@ -35,12 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
             datasets: [{
-                label: 'Czas Ćwiczeń (minuty)',
+                label: 'Czas (minuty)',
                 data: [],
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 1,
-                fill: true
+                borderWidth: 1
             }]
         },
         options: {
@@ -52,120 +51,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Funkcja do zapisywania aktywności
-    activityForm.addEventListener('submit', saveActivity);
-
-    // Funkcja do czyszczenia danych
-    clearDataButton.addEventListener('click', clearData);
-
-    // Wyświetlanie danych po załadowaniu strony
-    updateCharts();
-    displayStats();
-    displayNotes();
-
-    function saveActivity(event) {
-        event.preventDefault();
-
+    // Zapis aktywności
+    activityForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         const day = document.getElementById('day').value;
-        const steps = parseInt(document.getElementById('steps').value);
-        const time = parseInt(document.getElementById('time').value);
+        const steps = document.getElementById('steps').value;
+        const time = document.getElementById('time').value;
+        const goalSteps = goalStepsInput.value || 10000; // Domyślny cel: 10000 kroków
+        const goalTime = goalTimeInput.value || 60; // Domyślny cel: 60 minut
 
-        if (steps < 0 || time < 0) {
-            alert("Liczba kroków i czas ćwiczeń nie mogą być ujemne!");
-            return;
-        }
-
-        const notes = notesInput.value;
-        const goalSteps = goalStepsInput.value ? parseInt(goalStepsInput.value) : null;
-        const goalTime = goalTimeInput.value ? parseInt(goalTimeInput.value) : null;
-
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        
-        activityData[day] = {
-            steps: steps,
-            time: time,
-            notes: notes,
-            goalSteps: goalSteps,
-            goalTime: goalTime
-        };
-
-        localStorage.setItem('activityData', JSON.stringify(activityData));
-        updateCharts();
-        displayStats();
-        displayNotes();
-        activityForm.reset();
-    }
-
-    function updateCharts() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-
-        const stepsData = [];
-        const timeData = [];
-
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i] || { steps: 0, time: 0 };
-            stepsData.push(dayData.steps);
-            timeData.push(dayData.time);
-        }
-
-        stepsChart.data.datasets[0].data = stepsData;
+        // Aktualizacja wykresów
+        stepsChart.data.datasets[0].data[day - 1] = steps;
+        timeChart.data.datasets[0].data[day - 1] = time;
         stepsChart.update();
-
-        timeChart.data.datasets[0].data = timeData;
         timeChart.update();
-    }
 
-    function displayStats() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        const statsContent = document.getElementById('statsContent');
-
-        let totalSteps = 0;
-        let totalTime = 0;
-
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i] || { steps: 0, time: 0 };
-            totalSteps += dayData.steps;
-            totalTime += dayData.time;
-        }
-
-        statsContent.innerHTML = `<p>Łącznie kroki: ${totalSteps}</p>
-                                   <p>Łączny czas ćwiczeń: ${totalTime} minut</p>`;
-    }
-
-    function displayNotes() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
+        // Dodanie notatek do sekcji
         const notesList = document.getElementById('notesList');
-        notesList.innerHTML = '';
+        const noteItem = document.createElement('div');
+        noteItem.textContent = `Dzień ${day}: ${notesInput.value || 'Brak notatek'}`;
+        notesList.appendChild(noteItem);
 
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i];
-            if (dayData && dayData.notes) {
-                notesList.innerHTML += `<p><strong>Dzień ${i}:</strong> ${dayData.notes}</p>`;
-            }
-        }
-    }
+        // Wyświetlenie cytatu motywacyjnego
+        const motivationalQuote = document.getElementById('motivationalQuote');
+        axios.get('https://api.quotable.io/random')
+            .then(response => {
+                motivationalQuote.textContent = `Motywacyjny cytat: "${response.data.content}" - ${response.data.author}`;
+            })
+            .catch(error => {
+                motivationalQuote.textContent = 'Nie udało się pobrać cytatu motywacyjnego.';
+            });
 
-    function clearData() {
-        localStorage.removeItem('activityData');
-        updateCharts();
-        displayStats();
-        displayNotes();
-        alert('Wszystkie dane zostały usunięte.');
-    }
+        // Wyświetlenie statystyk
+        const statsContent = document.getElementById('statsContent');
+        const stepsDifference = steps - goalSteps;
+        const timeDifference = time - goalTime;
+        statsContent.innerHTML = `
+            <p>Kroki: ${steps} (${stepsDifference >= 0 ? 'Powyżej celu' : 'Poniżej celu'})</p>
+            <p>Czas: ${time} minut (${timeDifference >= 0 ? 'Powyżej celu' : 'Poniżej celu'})</p>
+        `;
+    });
 
-    // Motywacyjne cytaty
-    const quotes = [
-        "Nie czekaj na odpowiedni moment. Stwórz go!",
-        "Małe kroki prowadzą do wielkich zmian.",
-        "Sukces to suma małych wysiłków powtarzanych dzień po dniu.",
-        "Nie ma nic bardziej motywującego niż postępy!",
-        "Rób to, co kochasz, a nigdy nie będziesz musiał pracować."
-    ];
-
-    function displayQuote() {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        document.getElementById('motivationalQuote').innerText = quotes[randomIndex];
-    }
-
-    displayQuote();
+    // Wyczyść dane
+    clearDataButton.addEventListener('click', function() {
+        stepsChart.data.datasets[0].data = [];
+        timeChart.data.datasets[0].data = [];
+        stepsChart.update();
+        timeChart.update();
+        document.getElementById('notesList').innerHTML = '';
+        document.getElementById('statsContent').innerHTML = '';
+        document.getElementById('motivationalQuote').innerHTML = '';
+    });
 });
