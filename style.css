@@ -1,157 +1,63 @@
-:root {
-    --primary-color: #28a745; /* Zielony */
-    --secondary-color: #218838; /* Ciemniejszy zielony */
-    --background-color: #f0f0f0; /* Jasnoszary */
-    --white: #ffffff; /* Biały */
-    --shadow: rgba(0, 0, 0, 0.1); /* Cień */
-    --transition-time: 0.3s;
-}
-
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    background-color: #f4f4f4;
 }
 
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 0 15px var(--shadow);
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    transition: all var(--transition-time);
-}
-
-h1 {
+header {
+    background-color: #4CAF50;
+    color: white;
     text-align: center;
-    margin: 20px 0;
-    color: var(--primary-color);
+    padding: 1rem;
 }
 
-nav {
-    background-color: #333;
-    color: var(--white);
-    margin: 20px 0;
+main {
+    padding: 1rem;
+}
+
+#workout-form,
+#progress {
+    background-color: white;
     border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem 0;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    transition: background-color var(--transition-time);
-}
-
-nav li {
-    margin: 0 15px;
-}
-
-nav a {
-    color: var(--white);
-    text-decoration: none;
-    padding: 10px;
-    transition: color var(--transition-time);
-}
-
-nav a:hover {
-    color: var(--primary-color);
-}
-
-form {
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px var(--shadow);
-    transition: transform var(--transition-time);
-}
-
-form:hover {
-    transform: scale(1.02);
+h2 {
+    color: #333;
 }
 
 label {
     display: block;
-    margin: 10px 0 5px;
+    margin: 0.5rem 0 0.2rem;
 }
 
-input, textarea, select {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color var(--transition-time);
-}
-
-input:focus, textarea:focus, select:focus {
-    border-color: var(--primary-color);
-    outline: none;
+input {
+    width: calc(100% - 10px);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 button {
-    padding: 10px 15px;
-    background: linear-gradient(45deg, var(--primary-color), #66d99b);
-    color: var(--white);
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background var(--transition-time), transform 0.2s;
-    margin: 5px;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #218838, #3bd172);
-    transform: translateY(-2px);
+    background-color: #45a049;
 }
 
-.chart-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-#motivationalQuote {
-    font-style: italic;
-    margin-top: 20px;
+footer {
     text-align: center;
-    animation: fadeIn 1s ease-in;
-}
-
-#statistics, #notesContainer {
-    margin-top: 20px;
-    background-color: var(--white);
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px var(--shadow);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@media (max-width: 600px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    input, textarea, select {
-        width: 100%;
-    }
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
