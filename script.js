@@ -1,64 +1,86 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const activityForm = document.getElementById("activityForm");
-    const progressChart = document.getElementById("progressChart").getContext("2d");
-    let activities = JSON.parse(localStorage.getItem("activities")) || [];
+// Licznik kroków
+const saveStepsBtn = document.getElementById('save-steps');
+const stepSummary = document.getElementById('step-summary');
+
+saveStepsBtn.addEventListener('click', () => {
+    const dailySteps = parseInt(document.getElementById('daily-steps').value) || 0;
+    const goalSteps = parseInt(document.getElementById('goal-steps').value) || 0;
     
-    // Chart.js setup
-    const chart = new Chart(progressChart, {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Czas Treningu (min)',
-                data: [],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            }]
+    localStorage.setItem('dailySteps', dailySteps);
+    localStorage.setItem('goalSteps', goalSteps);
+    
+    displayStepSummary();
+});
+
+function displayStepSummary() {
+    const dailySteps = localStorage.getItem('dailySteps');
+    const goalSteps = localStorage.getItem('goalSteps');
+    
+    stepSummary.innerHTML = `Dzisiaj zrobione kroki: ${dailySteps}. Cel kroków: ${goalSteps}.`;
+}
+
+// Kalendarz
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        events: [],
+        editable: true,
+        eventLimit: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
         },
-        options: {
-            scales: {
-                x: { title: { display: true, text: 'Dzień' } },
-                y: { title: { display: true, text: 'Czas (min)' } }
+        dayClick: function(date) {
+            const eventTitle = prompt('Wpisz nazwę treningu:');
+            if (eventTitle) {
+                $('#calendar').fullCalendar('renderEvent', {
+                    title: eventTitle,
+                    start: date,
+                    allDay: true
+                });
             }
         }
     });
-
-    // Load existing activities and update chart
-    function loadActivities() {
-        activities.forEach(activity => {
-            chart.data.labels.push(activity.day);
-            chart.data.datasets[0].data.push(activity.duration);
-        });
-        chart.update();
-    }
-
-    // Add activity
-    activityForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const activity = document.getElementById("activity").value;
-        const duration = parseInt(document.getElementById("duration").value);
-        const day = `Dzień ${activities.length + 1}`;
-
-        activities.push({ activity, duration, day });
-        localStorage.setItem("activities", JSON.stringify(activities));
-
-        // Update chart
-        chart.data.labels.push(day);
-        chart.data.datasets[0].data.push(duration);
-        chart.update();
-
-        // Reset form
-        activityForm.reset();
-    });
-
-    // Reset progress
-    document.getElementById("resetProgress").addEventListener("click", () => {
-        localStorage.removeItem("activities");
-        activities = [];
-        chart.data.labels = [];
-        chart.data.datasets[0].data = [];
-        chart.update();
-    });
-
-    loadActivities();
 });
+
+// Wykresy
+const ctx = document.getElementById('progressChart').getContext('2d');
+const progressChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz.'],
+        datasets: [{
+            label: 'Zrobione kroki',
+            data: [2000, 4000, 3000, 5000, 7000, 6000, 8000], // Przykładowe dane
+            borderColor: 'rgba(75, 192, 192, 1)',
+            fill: false,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+// Podsumowanie treningu
+const saveNotesBtn = document.getElementById('save-notes');
+const savedNotes = document.getElementById('saved-notes');
+
+saveNotesBtn.addEventListener('click', () => {
+    const notes = document.getElementById('training-notes').value;
+    const existingNotes = localStorage.getItem('trainingNotes') || '';
+    
+    localStorage.setItem('trainingNotes', existingNotes + notes + '\n');
+    displaySavedNotes();
+});
+
+function displaySavedNotes() {
+    const notes = localStorage.getItem('trainingNotes');
+    savedNotes.innerHTML = notes.replace(/\n/g, '<br/>');
+}
