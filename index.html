@@ -1,63 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Challenge</title>
+    <title>7-Dniowe Wyzwanie Aktywności</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>7-Day Fitness Challenge</h1>
-        <button id="toggle-theme">Switch to Dark Mode</button>
-    </header>
-    
-    <section class="stats">
-        <h2>Step Tracker</h2>
-        <p>Steps Today: <span id="steps-today">0</span></p>
-        <p>Step Goal: <span id="step-goal">10000</span></p>
-    </section>
-
-    <section class="calories">
-        <h2>Calories Burned Calculator</h2>
-        <form id="calorie-form">
-            <label for="activity">Select Activity:</label>
-            <select id="activity" name="activity">
-                <option value="walking">Walking</option>
-                <option value="running">Running</option>
-                <option value="cycling">Cycling</option>
+    <div class="container">
+        <h1>7-Dniowe Wyzwanie Aktywności</h1>
+        <nav>
+            <ul>
+                <li><a href="#charts">Wykresy</a></li>
+                <li><a href="#statistics">Statystyki</a></li>
+                <li><a href="#notesContainer">Notatki</a></li>
+            </ul>
+        </nav>
+        
+        <form id="activityForm">
+            <label for="day">Wybierz Dzień:</label>
+            <select id="day">
+                <option value="1">Dzień 1</option>
+                <option value="2">Dzień 2</option>
+                <option value="3">Dzień 3</option>
+                <option value="4">Dzień 4</option>
+                <option value="5">Dzień 5</option>
+                <option value="6">Dzień 6</option>
+                <option value="7">Dzień 7</option>
             </select>
-            <label for="duration">Duration (minutes):</label>
-            <input type="number" id="duration" name="duration" min="1">
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" name="weight" min="1">
-            <button type="submit">Calculate Calories</button>
+
+            <label for="steps">Wprowadź Kroki:</label>
+            <input type="number" id="steps" min="0" placeholder="np. 5000" required>
+
+            <label for="time">Czas Ćwiczeń (minuty):</label>
+            <input type="number" id="time" min="0" placeholder="np. 30" required>
+
+            <label for="goalSteps">Cel kroków:</label>
+            <input type="number" id="goalSteps" min="0" placeholder="np. 10000">
+
+            <label for="goalTime">Cel czasu (minuty):</label>
+            <input type="number" id="goalTime" min="0" placeholder="np. 60">
+
+            <label for="notes">Notatki:</label>
+            <textarea id="notes" placeholder="Wpisz swoje notatki..."></textarea>
+
+            <button type="submit">Zapisz Aktywność</button>
+
+        <div id="motivationalQuote"></div>
+        <button type="button" id="clearData">Wyczyść Dane</button>
         </form>
-        <p>Calories Burned: <span id="calories-burned">0</span></p>
-    </section>
 
-    <section class="weight">
-        <h2>Weight Progress</h2>
-        <canvas id="weightChart"></canvas>
-        <form id="weight-form">
-            <label for="weight-entry">Enter Weight (kg):</label>
-            <input type="number" id="weight-entry" name="weight-entry" min="1">
-            <button type="submit">Add Weight</button>
-        </form>
-    </section>
+        <div class="chart-container" id="charts">
+            <canvas id="stepsChart"></canvas>
+            <canvas id="timeChart"></canvas>
+        </div>
 
-    <section class="challenges">
-        <h2>Daily Challenges</h2>
-        <p>Today's Challenge: <span id="daily-challenge">Walk 1000 extra steps</span></p>
-        <button id="complete-challenge">Complete Challenge</button>
-        <p>Points: <span id="points">0</span></p>
-    </section>
+        <div id="statistics">
+            <h2>Statystyki</h2>
+            <div id="statsContent"></div>
+        </div>
+        
+        <div id="notesContainer">
+            <h2>Notatki</h2>
+            <div id="notesList"></div>
+        </div>
+    </div>
 
-    <footer>
-        <p>Weekly Progress Summary</p>
-        <canvas id="activityChart"></canvas>
-    </footer>
     <script src="script.js"></script>
 </body>
 </html>
