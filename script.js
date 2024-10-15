@@ -62,6 +62,29 @@ document.addEventListener('DOMContentLoaded', function() {
         timeChart.update();
     };
 
+    const displayNotes = (notes) => {
+        const notesList = notes.map((note, index) => `
+            <li>
+                Dzień ${index + 1}: ${note || 'Brak'}
+                <button onclick="editNote(${index})">Edytuj</button>
+            </li>`).join('');
+        document.getElementById('notesList').innerHTML = `<ul>${notesList}</ul>`;
+    };
+
+    window.editNote = function(index) {
+        const notesData = JSON.parse(localStorage.getItem('notesData')) || [];
+        const noteToEdit = notesData[index];
+
+        document.getElementById('day').value = index + 1; // Ustaw dzień
+        document.getElementById('notes').value = noteToEdit || ''; // Ustaw notatkę
+
+        const activityData = JSON.parse(localStorage.getItem('activityData')) || [];
+        const timeData = JSON.parse(localStorage.getItem('timeData')) || [];
+
+        document.getElementById('steps').value = activityData[index] || 0;
+        document.getElementById('time').value = timeData[index] || 0;
+    };
+
     activityForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -70,6 +93,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const time = parseInt(document.getElementById('time').value);
         const notesInput = document.getElementById('notes');
         const notes = notesInput.value;
+
+        // Walidacja danych wejściowych
+        if (isNaN(steps) || steps < 0) {
+            alert("Liczba kroków musi być liczbą nieujemną.");
+            return;
+        }
+        if (isNaN(time) || time < 0 || time > 1440) {
+            alert("Czas ćwiczeń musi być liczbą między 0 a 1440 minutami.");
+            return;
+        }
 
         // Zapisz kroki i czas do localStorage
         let activityData = JSON.parse(localStorage.getItem('activityData')) || new Array(7).fill(0);
@@ -121,11 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Średni Czas na Dzień (min): ${averageTime}</p>
         `;
         document.getElementById('statsContent').innerHTML = statsContent;
-    };
-
-    const displayNotes = (notes) => {
-        const notesList = notes.map((note, index) => `<li>Dzień ${index + 1}: ${note || 'Brak'}</li>`).join('');
-        document.getElementById('notesList').innerHTML = `<ul>${notesList}</ul>`;
     };
 
     const showMotivationalQuote = () => {
