@@ -4,6 +4,7 @@
     --background-color: #f0f0f0; /* Jasnoszary */
     --white: #ffffff; /* Biały */
     --shadow: rgba(0, 0, 0, 0.1); /* Cień */
+    --transition-time: 0.3s;
 }
 
 body {
@@ -18,14 +19,15 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: var(--white);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 0 15px var(--shadow);
     display: grid;
     grid-template-rows: auto 1fr auto;
+    transition: all var(--transition-time);
 }
 
 h1 {
@@ -46,7 +48,7 @@ nav ul {
     padding: 0;
     display: flex;
     justify-content: center;
-    transition: background-color 0.3s;
+    transition: background-color var(--transition-time);
 }
 
 nav li {
@@ -57,7 +59,7 @@ nav a {
     color: var(--white);
     text-decoration: none;
     padding: 10px;
-    transition: color 0.3s;
+    transition: color var(--transition-time);
 }
 
 nav a:hover {
@@ -68,7 +70,7 @@ form {
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 0 10px var(--shadow);
-    transition: transform 0.3s;
+    transition: transform var(--transition-time);
 }
 
 form:hover {
@@ -86,7 +88,7 @@ input, textarea, select {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    transition: border-color 0.3s;
+    transition: border-color var(--transition-time);
 }
 
 input:focus, textarea:focus, select:focus {
@@ -95,20 +97,20 @@ input:focus, textarea:focus, select:focus {
 }
 
 button {
-    padding: 6px 10px; /* Mniejsze padding */
-    background: linear-gradient(45deg, var(--primary-color), #66d99b); /* Zmiana koloru na gradient zielony */
+    padding: 10px 15px;
+    background: linear-gradient(45deg, var(--primary-color), #66d99b);
     color: var(--white);
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s, transform 0.2s;
-    margin: 5px; /* Dodany margines, aby uniknąć nachodzenia */
+    transition: background var(--transition-time), transform 0.2s;
+    margin: 5px;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #218838, #3bd172); /* Zmiana koloru na ciemniejszy zielony */
+    background: linear-gradient(45deg, #218838, #3bd172);
     transform: translateY(-2px);
 }
 
