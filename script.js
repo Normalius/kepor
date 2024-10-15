@@ -1,86 +1,82 @@
-// Licznik kroków
-const saveStepsBtn = document.getElementById('save-steps');
-const stepSummary = document.getElementById('step-summary');
-
-saveStepsBtn.addEventListener('click', () => {
-    const dailySteps = parseInt(document.getElementById('daily-steps').value) || 0;
-    const goalSteps = parseInt(document.getElementById('goal-steps').value) || 0;
+document.addEventListener('DOMContentLoaded', () => {
+    let points = 0;
+    const stepGoal = 10000;
+    let stepsToday = 0;
+    let weightData = [];
     
-    localStorage.setItem('dailySteps', dailySteps);
-    localStorage.setItem('goalSteps', goalSteps);
-    
-    displayStepSummary();
-});
+    // Dark Mode Toggle
+    const toggleThemeBtn = document.getElementById('toggle-theme');
+    toggleThemeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+    });
 
-function displayStepSummary() {
-    const dailySteps = localStorage.getItem('dailySteps');
-    const goalSteps = localStorage.getItem('goalSteps');
-    
-    stepSummary.innerHTML = `Dzisiaj zrobione kroki: ${dailySteps}. Cel kroków: ${goalSteps}.`;
-}
+    // Calculate Calories
+    document.getElementById('calorie-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const activity = document.getElementById('activity').value;
+        const duration = Number(document.getElementById('duration').value);
+        const weight = Number(document.getElementById('weight').value);
+        const calories = calculateCalories(activity, duration, weight);
+        document.getElementById('calories-burned').textContent = calories.toFixed(2);
+    });
 
-// Kalendarz
-$(document).ready(function() {
-    $('#calendar').fullCalendar({
-        events: [],
-        editable: true,
-        eventLimit: true,
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        dayClick: function(date) {
-            const eventTitle = prompt('Wpisz nazwę treningu:');
-            if (eventTitle) {
-                $('#calendar').fullCalendar('renderEvent', {
-                    title: eventTitle,
-                    start: date,
-                    allDay: true
-                });
+    function calculateCalories(activity, duration, weight) {
+        const METs = {
+            walking: 3.5,
+            running: 7,
+            cycling: 6
+        };
+        return METs[activity] * 3.5 * weight / 200 * duration;
+    }
+
+    // Weight Tracking
+    document.getElementById('weight-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const weightEntry = Number(document.getElementById('weight-entry').value);
+        weightData.push(weightEntry);
+        updateWeightChart(weightData);
+    });
+
+    function updateWeightChart(weightData) {
+        const ctx = document.getElementById('weightChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: weightData.map((_, index) => `Day ${index + 1}`),
+                datasets: [{
+                    label: 'Weight (kg)',
+                    data: weightData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false
+                }]
             }
+        });
+    }
+
+    // Daily Challenge
+    document.getElementById('complete-challenge').addEventListener('click', () => {
+        points += 10;
+        document.getElementById('points').textContent = points;
+        alert('Challenge Completed! You earned 10 points.');
+    });
+
+    // Step Tracker (mock data for now)
+    document.getElementById('steps-today').textContent = stepsToday;
+    document.getElementById('step-goal').textContent = stepGoal;
+
+    // Weekly Progress (mock chart data)
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Steps',
+                data: [8000, 10000, 12000, 9000, 7000, 13000, 10000],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
         }
     });
 });
-
-// Wykresy
-const ctx = document.getElementById('progressChart').getContext('2d');
-const progressChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz.'],
-        datasets: [{
-            label: 'Zrobione kroki',
-            data: [2000, 4000, 3000, 5000, 7000, 6000, 8000], // Przykładowe dane
-            borderColor: 'rgba(75, 192, 192, 1)',
-            fill: false,
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-// Podsumowanie treningu
-const saveNotesBtn = document.getElementById('save-notes');
-const savedNotes = document.getElementById('saved-notes');
-
-saveNotesBtn.addEventListener('click', () => {
-    const notes = document.getElementById('training-notes').value;
-    const existingNotes = localStorage.getItem('trainingNotes') || '';
-    
-    localStorage.setItem('trainingNotes', existingNotes + notes + '\n');
-    displaySavedNotes();
-});
-
-function displaySavedNotes() {
-    const notes = localStorage.getItem('trainingNotes');
-    savedNotes.innerHTML = notes.replace(/\n/g, '<br/>');
-}
