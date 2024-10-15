@@ -1,21 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const activityForm = document.getElementById('activityForm');
-    const notesInput = document.getElementById('notes');
-    const goalStepsInput = document.getElementById('goalSteps');
-    const goalTimeInput = document.getElementById('goalTime');
     const clearDataButton = document.getElementById('clearData');
+    const ctxSteps = document.getElementById('stepsChart').getContext('2d');
+    const ctxTime = document.getElementById('timeChart').getContext('2d');
 
-    // Ustawienia wykresów
-    const stepsCtx = document.getElementById('stepsChart').getContext('2d');
-    const timeCtx = document.getElementById('timeChart').getContext('2d');
-
-    const stepsChart = new Chart(stepsCtx, {
+    const stepsChart = new Chart(ctxSteps, {
         type: 'bar',
         data: {
             labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
             datasets: [{
-                label: 'Kroki',
-                data: [],
+                label: 'Liczba Kroków',
+                data: new Array(7).fill(0),
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -30,17 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    const timeChart = new Chart(timeCtx, {
-        type: 'line',
+    const timeChart = new Chart(ctxTime, {
+        type: 'bar',
         data: {
             labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
             datasets: [{
-                label: 'Czas Ćwiczeń (minuty)',
-                data: [],
+                label: 'Czas Ćwiczeń (min)',
+                data: new Array(7).fill(0),
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 1,
-                fill: true
+                borderWidth: 1
             }]
         },
         options: {
@@ -52,131 +46,99 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Funkcja do zapisywania aktywności
-    activityForm.addEventListener('submit', saveActivity);
+    const getActiveDayData = () => {
+        return {
+            steps: JSON.parse(localStorage.getItem('activityData')) || new Array(7).fill(0),
+            time: JSON.parse(localStorage.getItem('timeData')) || new Array(7).fill(0),
+        };
+    };
 
-    // Funkcja do czyszczenia danych
-    clearDataButton.addEventListener('click', clearData);
+    const updateCharts = () => {
+        const { steps, time } = getActiveDayData();
+        stepsChart.data.datasets[0].data = steps;
+        stepsChart.update();
 
-    // Definicje funkcji
+        timeChart.data.datasets[0].data = time;
+        timeChart.update();
+    };
 
-    function saveActivity(event) {
-        event.preventDefault();
+    activityForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-        const day = document.getElementById('day').value;
+        const day = document.getElementById('day').value - 1; // Indeks dnia
         const steps = parseInt(document.getElementById('steps').value);
         const time = parseInt(document.getElementById('time').value);
-
-        // Walidacja danych
-        if (isNaN(steps) || isNaN(time) || steps < 0 || time < 0) {
-            alert("Liczba kroków i czas ćwiczeń muszą być liczbami dodatnimi!");
-            return;
-        }
-
+        const notesInput = document.getElementById('notes');
         const notes = notesInput.value;
-        const goalSteps = goalStepsInput.value ? parseInt(goalStepsInput.value) : null;
-        const goalTime = goalTimeInput.value ? parseInt(goalTimeInput.value) : null;
 
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
+        // Zapisz kroki i czas do localStorage
+        let activityData = JSON.parse(localStorage.getItem('activityData')) || new Array(7).fill(0);
+        let timeData = JSON.parse(localStorage.getItem('timeData')) || new Array(7).fill(0);
+        let notesData = JSON.parse(localStorage.getItem('notesData')) || [];
 
-        activityData[day] = {
-            steps: steps,
-            time: time,
-            notes: notes,
-            goalSteps: goalSteps,
-            goalTime: goalTime
-        };
+        activityData[day] = steps;
+        timeData[day] = time;
+
+        // Zapisz notatki
+        if (notes) {
+            notesData[day] = notes;
+        }
 
         localStorage.setItem('activityData', JSON.stringify(activityData));
+        localStorage.setItem('timeData', JSON.stringify(timeData));
+        localStorage.setItem('notesData', JSON.stringify(notesData));
+
+        // Wyświetl nowe statystyki
         updateCharts();
-        displayStats();
-        displayNotes();
+        displayStatistics(activityData, timeData);
+        displayNotes(notesData);
+        showMotivationalQuote();
         activityForm.reset();
-    }
+    });
 
-    async function updateCharts() {
-        const activityData = await loadActivityData();
-
-        const stepsData = [];
-        const timeData = [];
-
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i] || { steps: 0, time: 0 };
-            stepsData.push(dayData.steps);
-            timeData.push(dayData.time);
-        }
-
-        // Renderowanie wykresów tylko wtedy, gdy dane się zmieniają
-        if (JSON.stringify(stepsChart.data.datasets[0].data) !== JSON.stringify(stepsData)) {
-            stepsChart.data.datasets[0].data = stepsData;
-            stepsChart.update();
-        }
-
-        if (JSON.stringify(timeChart.data.datasets[0].data) !== JSON.stringify(timeData)) {
-            timeChart.data.datasets[0].data = timeData;
-            timeChart.update();
-        }
-    }
-
-    async function loadActivityData() {
-        return JSON.parse(localStorage.getItem('activityData')) || {};
-    }
-
-    function displayStats() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        const statsContent = document.getElementById('statsContent');
-
-        let totalSteps = 0;
-        let totalTime = 0;
-
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i] || { steps: 0, time: 0 };
-            totalSteps += dayData.steps;
-            totalTime += dayData.time;
-        }
-
-        statsContent.innerHTML = `<p>Łącznie kroki: ${totalSteps}</p>
-                                   <p>Łączny czas ćwiczeń: ${totalTime} minut</p>`;
-    }
-
-    function displayNotes() {
-        const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        const notesList = document.getElementById('notesList');
-        notesList.innerHTML = '';
-
-        for (let i = 1; i <= 7; i++) {
-            const dayData = activityData[i];
-            if (dayData && dayData.notes) {
-                notesList.innerHTML += `<p><strong>Dzień ${i}:</strong> ${dayData.notes}</p>`;
-            }
-        }
-    }
-
-    function clearData() {
+    clearDataButton.addEventListener('click', () => {
         localStorage.removeItem('activityData');
-        updateCharts();
-        displayStats();
-        displayNotes();
-        alert('Wszystkie dane zostały usunięte.');
-    }
+        localStorage.removeItem('timeData');
+        localStorage.removeItem('notesData');
+        stepsChart.data.datasets[0].data = new Array(7).fill(0);
+        timeChart.data.datasets[0].data = new Array(7).fill(0);
+        stepsChart.update();
+        timeChart.update();
+        document.getElementById('notesList').innerHTML = '';
+        document.getElementById('statsContent').innerHTML = '';
+    });
 
-    // Motywacyjne cytaty
-    const quotes = [
-        "Nie czekaj na odpowiedni moment. Stwórz go!",
-        "Małe kroki prowadzą do wielkich zmian.",
-        "Sukces to suma małych wysiłków powtarzanych dzień po dniu.",
-        "Nie ma nic bardziej motywującego niż postępy!",
-        "Rób to, co kochasz, a nigdy nie będziesz musiał pracować."
-    ];
+    const displayStatistics = (steps, time) => {
+        const totalSteps = steps.reduce((acc, curr) => acc + curr, 0);
+        const totalTime = time.reduce((acc, curr) => acc + curr, 0);
+        const averageSteps = (totalSteps / steps.length).toFixed(2);
+        const averageTime = (totalTime / time.length).toFixed(2);
 
-    function displayQuote() {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        document.getElementById('motivationalQuote').innerText = quotes[randomIndex];
-    }
+        const statsContent = `
+            <p>Całkowite Kroki: ${totalSteps}</p>
+            <p>Całkowity Czas (min): ${totalTime}</p>
+            <p>Średnie Kroki na Dzień: ${averageSteps}</p>
+            <p>Średni Czas na Dzień (min): ${averageTime}</p>
+        `;
+        document.getElementById('statsContent').innerHTML = statsContent;
+    };
 
-    // Wyświetlanie danych po załadowaniu strony
-    displayQuote();
-    updateCharts();
-    displayStats();
-    displayNotes();
+    const displayNotes = (notes) => {
+        const notesList = notes.map((note, index) => `<li>Dzień ${index + 1}: ${note || 'Brak'}</li>`).join('');
+        document.getElementById('notesList').innerHTML = `<ul>${notesList}</ul>`;
+    };
+
+    const showMotivationalQuote = () => {
+        const quotes = [
+            "Nie musisz być wielki, aby zacząć, ale musisz zacząć, aby być wielki.",
+            "Twoje ciało może osiągnąć wszystko, co umysł może wyobrazić.",
+            "Nie czekaj na idealny moment, weź moment i spraw, aby był idealny."
+        ];
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById('motivationalQuote').innerText = quote;
+    };
+
+    updateCharts(); // Inicjalizuj wykresy
+    displayStatistics(getActiveDayData().steps, getActiveDayData().time);
+    displayNotes(JSON.parse(localStorage.getItem('notesData')) || []);
 });
