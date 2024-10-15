@@ -1,43 +1,62 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-dniowe Wyzwanie Aktywności</title>
+    <title>Fitness Challenge</title>
     <link rel="stylesheet" href="style.css">
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>7-dniowe Wyzwanie Aktywności</h1>
+    <header>
+        <h1>7-Day Fitness Challenge</h1>
+        <button id="toggle-theme">Switch to Dark Mode</button>
+    </header>
+    
+    <section class="stats">
+        <h2>Step Tracker</h2>
+        <p>Steps Today: <span id="steps-today">0</span></p>
+        <p>Step Goal: <span id="step-goal">10000</span></p>
+    </section>
 
-        <!-- Licznik kroków -->
-        <div class="step-tracker">
-            <h2>Licznik kroków</h2>
-            <input type="number" id="daily-steps" placeholder="Ilość kroków dzisiaj" />
-            <input type="number" id="goal-steps" placeholder="Cel kroków" />
-            <button id="save-steps">Zapisz</button>
-            <div id="step-summary"></div>
-        </div>
+    <section class="calories">
+        <h2>Calories Burned Calculator</h2>
+        <form id="calorie-form">
+            <label for="activity">Select Activity:</label>
+            <select id="activity" name="activity">
+                <option value="walking">Walking</option>
+                <option value="running">Running</option>
+                <option value="cycling">Cycling</option>
+            </select>
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" name="duration" min="1">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" min="1">
+            <button type="submit">Calculate Calories</button>
+        </form>
+        <p>Calories Burned: <span id="calories-burned">0</span></p>
+    </section>
 
-        <!-- Kalendarz -->
-        <div id='calendar'></div>
+    <section class="weight">
+        <h2>Weight Progress</h2>
+        <canvas id="weightChart"></canvas>
+        <form id="weight-form">
+            <label for="weight-entry">Enter Weight (kg):</label>
+            <input type="number" id="weight-entry" name="weight-entry" min="1">
+            <button type="submit">Add Weight</button>
+        </form>
+    </section>
 
-        <!-- Wykres postępów -->
-        <canvas id="progressChart" width="400" height="200"></canvas>
+    <section class="challenges">
+        <h2>Daily Challenges</h2>
+        <p>Today's Challenge: <span id="daily-challenge">Walk 1000 extra steps</span></p>
+        <button id="complete-challenge">Complete Challenge</button>
+        <p>Points: <span id="points">0</span></p>
+    </section>
 
-        <!-- Podsumowanie treningu -->
-        <div class="summary">
-            <h2>Podsumowanie treningu</h2>
-            <textarea id="training-notes" placeholder="Zapisz swoje przemyślenia..."></textarea>
-            <button id="save-notes">Zapisz podsumowanie</button>
-            <div id="saved-notes"></div>
-        </div>
-    </div>
+    <footer>
+        <p>Weekly Progress Summary</p>
+        <canvas id="activityChart"></canvas>
+    </footer>
 
     <script src="script.js"></script>
 </body>
