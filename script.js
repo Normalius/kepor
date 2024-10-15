@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
             totalTime += dayData.time;
         }
 
-        statsContent.innerHTML = <p>Łącznie kroki: ${totalSteps}</p>
-                                   <p>Łączny czas ćwiczeń: ${totalTime} minut</p>;
+        statsContent.innerHTML = `<p>Łącznie kroki: ${totalSteps}</p>
+                                  <p>Łączny czas ćwiczeń: ${totalTime} minut</p>`;
     }
 
     function displayNotes() {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 1; i <= 7; i++) {
             const dayData = activityData[i];
             if (dayData && dayData.notes) {
-                notesList.innerHTML += <p><strong>Dzień ${i}:</strong> ${dayData.notes}</p>;
+                notesList.innerHTML += `<p><strong>Dzień ${i}:</strong> ${dayData.notes}</p>`;
             }
         }
     }
