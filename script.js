@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const stepsCtx = document.getElementById('stepsChart').getContext('2d');
     const timeCtx = document.getElementById('timeChart').getContext('2d');
 
-    let stepsChart = new Chart(stepsCtx, {
+    const stepsChart = new Chart(stepsCtx, {
         type: 'bar',
         data: {
             labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    let timeChart = new Chart(timeCtx, {
+    const timeChart = new Chart(timeCtx, {
         type: 'line',
         data: {
             labels: ['Dzień 1', 'Dzień 2', 'Dzień 3', 'Dzień 4', 'Dzień 5', 'Dzień 6', 'Dzień 7'],
@@ -67,8 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const steps = parseInt(document.getElementById('steps').value);
         const time = parseInt(document.getElementById('time').value);
 
-        if (steps < 0 || time < 0) {
-            alert("Liczba kroków i czas ćwiczeń nie mogą być ujemne!");
+        // Walidacja danych
+        if (isNaN(steps) || isNaN(time) || steps < 0 || time < 0) {
+            alert("Liczba kroków i czas ćwiczeń muszą być liczbami dodatnimi!");
             return;
         }
 
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const goalTime = goalTimeInput.value ? parseInt(goalTimeInput.value) : null;
 
         const activityData = JSON.parse(localStorage.getItem('activityData')) || {};
-        
+
         activityData[day] = {
             steps: steps,
             time: time,
@@ -105,11 +106,16 @@ document.addEventListener('DOMContentLoaded', function() {
             timeData.push(dayData.time);
         }
 
-        stepsChart.data.datasets[0].data = stepsData;
-        stepsChart.update();
+        // Renderowanie wykresów tylko wtedy, gdy dane się zmieniają
+        if (JSON.stringify(stepsChart.data.datasets[0].data) !== JSON.stringify(stepsData)) {
+            stepsChart.data.datasets[0].data = stepsData;
+            stepsChart.update();
+        }
 
-        timeChart.data.datasets[0].data = timeData;
-        timeChart.update();
+        if (JSON.stringify(timeChart.data.datasets[0].data) !== JSON.stringify(timeData)) {
+            timeChart.data.datasets[0].data = timeData;
+            timeChart.update();
+        }
     }
 
     async function loadActivityData() {
