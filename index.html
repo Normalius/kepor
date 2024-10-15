@@ -3,38 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7-Dniowe Wyzwanie Aktywności</title>
+    <title>7-dniowe Wyzwanie Aktywności</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>7-Dniowe Wyzwanie Aktywności</h1>
-        <p>Śledź swoje postępy i osiągaj cele fitness!</p>
-    </header>
+    <div class="container">
+        <h1>7-dniowe Wyzwanie Aktywności</h1>
 
-    <main>
-        <section id="workout-form">
-            <h2>Dodaj trening</h2>
-            <form id="activityForm">
-                <label for="activity">Rodzaj aktywności:</label>
-                <input type="text" id="activity" placeholder="np. Bieganie, Siłownia" required>
-                <label for="duration">Czas (min):</label>
-                <input type="number" id="duration" min="1" placeholder="np. 30" required>
-                <button type="submit">Dodaj</button>
-            </form>
-        </section>
+        <!-- Licznik kroków -->
+        <div class="step-tracker">
+            <h2>Licznik kroków</h2>
+            <input type="number" id="daily-steps" placeholder="Ilość kroków dzisiaj" />
+            <input type="number" id="goal-steps" placeholder="Cel kroków" />
+            <button id="save-steps">Zapisz</button>
+            <div id="step-summary"></div>
+        </div>
 
-        <section id="progress">
-            <h2>Postępy</h2>
-            <canvas id="progressChart" width="400" height="200"></canvas>
-            <button id="resetProgress">Zresetuj postępy</button>
-        </section>
-    </main>
+        <!-- Kalendarz -->
+        <div id='calendar'></div>
 
-    <footer>
-        <p>&copy; 2024 7-Dniowe Wyzwanie Aktywności</p>
-    </footer>
+        <!-- Wykres postępów -->
+        <canvas id="progressChart" width="400" height="200"></canvas>
+
+        <!-- Podsumowanie treningu -->
+        <div class="summary">
+            <h2>Podsumowanie treningu</h2>
+            <textarea id="training-notes" placeholder="Zapisz swoje przemyślenia..."></textarea>
+            <button id="save-notes">Zapisz podsumowanie</button>
+            <div id="saved-notes"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
