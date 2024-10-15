@@ -5,69 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>7-Dniowe Wyzwanie Aktywności</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>7-Dniowe Wyzwanie Aktywności</h1>
-        <nav>
-            <ul>
-                <li><a href="#charts">Wykresy</a></li>
-                <li><a href="#statistics">Statystyki</a></li>
-                <li><a href="#notesContainer">Notatki</a></li>
-            </ul>
-        </nav>
-        
-        <form id="activityForm">
-            <label for="day">Wybierz Dzień:</label>
-            <select id="day">
-                <option value="1">Dzień 1</option>
-                <option value="2">Dzień 2</option>
-                <option value="3">Dzień 3</option>
-                <option value="4">Dzień 4</option>
-                <option value="5">Dzień 5</option>
-                <option value="6">Dzień 6</option>
-                <option value="7">Dzień 7</option>
-            </select>
+        <p>Śledź swoje postępy i osiągaj cele fitness!</p>
+    </header>
 
-            <label for="steps">Wprowadź Kroki:</label>
-            <input type="number" id="steps" min="0" placeholder="np. 5000" required>
+    <main>
+        <section id="workout-form">
+            <h2>Dodaj trening</h2>
+            <form id="activityForm">
+                <label for="activity">Rodzaj aktywności:</label>
+                <input type="text" id="activity" placeholder="np. Bieganie, Siłownia" required>
+                <label for="duration">Czas (min):</label>
+                <input type="number" id="duration" min="1" placeholder="np. 30" required>
+                <button type="submit">Dodaj</button>
+            </form>
+        </section>
 
-            <label for="time">Czas Ćwiczeń (minuty):</label>
-            <input type="number" id="time" min="0" placeholder="np. 30" required>
+        <section id="progress">
+            <h2>Postępy</h2>
+            <canvas id="progressChart" width="400" height="200"></canvas>
+            <button id="resetProgress">Zresetuj postępy</button>
+        </section>
+    </main>
 
-            <label for="goalSteps">Cel kroków:</label>
-            <input type="number" id="goalSteps" min="0" placeholder="np. 10000">
-
-            <label for="goalTime">Cel czasu (minuty):</label>
-            <input type="number" id="goalTime" min="0" placeholder="np. 60">
-
-            <label for="notes">Notatki:</label>
-            <textarea id="notes" placeholder="Wpisz swoje notatki..."></textarea>
-
-            <button type="submit">Zapisz Aktywność</button>
-
-            <div id="motivationalQuote"></div>
-            <button type="button" id="clearData">Wyczyść Dane</button>
-        </form>
-
-        <div class="chart-container" id="charts">
-            <canvas id="stepsChart"></canvas>
-            <canvas id="timeChart"></canvas>
-        </div>
-
-        <div id="statistics">
-            <h2>Statystyki</h2>
-            <div id="statsContent"></div>
-        </div>
-        
-        <div id="notesContainer">
-            <h2>Notatki</h2>
-            <div id="notesList"></div>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2024 7-Dniowe Wyzwanie Aktywności</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
